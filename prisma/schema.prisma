@@ -12,7 +12,15 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+// enum
+enum Role {
+  SUPERADMIN
+  PASTOR
+  MODERATOR
+  USER
+}
 
+// models
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
@@ -27,4 +35,104 @@ model Post {
   published Boolean @default(false)
   authorId  Int
   author    User    @relation(fields: [authorId], references: [id])
+}
+
+model Users{
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  name      String?
+  password  String
+  phone     String?
+  role      Role  @default(USER)
+  testimonies Testimonies[]
+  events Events[]
+  announcements Announcements[]
+  readNotifications Read_Notifications[]
+  videos Videos[]
+  categories Categories[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonies{
+  id Int @id @default(autoincrement())
+  title String
+  content String
+  datePosted DateTime @default(now())
+  userId Int
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Events {
+  id Int @id  @default(autoincrement())
+  title String
+  description String
+  eventDate DateTime
+  userId Int
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Announcements {
+  id Int @id @default(autoincrement())
+  title String
+  content String
+  datePosted DateTime @default(now())
+  userId Int
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Videos {
+  id Int @id @default(autoincrement())
+  title String
+  description String?
+  preacher String
+  datePreached DateTime
+  audioUrl String?
+  videoUrl String?
+  youtubeID String?
+  thumbnailUrl String?
+  userId Int
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId Int
+  category Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Categories {
+  id Int @id @default(autoincrement())
+  title String @unique
+  description String?
+  userId Int
+  user Users @relation(fields: [userId], references: [id])
+  videos Videos[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notifications {
+  id Int @id @default(autoincrement())
+  title String
+  message String
+  dateSent DateTime @default(now())
+  readNotifications Read_Notifications[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Read_Notifications {
+  id Int @id @default(autoincrement())
+  userId Int
+  notificationId Int
+  read Boolean @default(false)
+  dateRead DateTime @default(now())
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification Notifications @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 }
