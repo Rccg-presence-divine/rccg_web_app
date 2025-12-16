@@ -8,6 +8,12 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User'
-export type * from './models/Post'
+export type * from './models/Users'
+export type * from './models/Testimonies'
+export type * from './models/Events'
+export type * from './models/Announcements'
+export type * from './models/Videos'
+export type * from './models/Categories'
+export type * from './models/Notifications'
+export type * from './models/Read_Notifications'
 export type * from './commonInputTypes'

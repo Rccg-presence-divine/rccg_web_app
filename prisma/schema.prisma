@@ -20,27 +20,10 @@ enum Role {
   USER
 }
 
-// models
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
-}
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
-}
-
 model Users{
   id        Int     @id @default(autoincrement())
   email     String  @unique
-  name      String?
+  name      String? 
   password  String
   phone     String?
   role      Role  @default(USER)
@@ -60,7 +43,7 @@ model Testimonies{
   content String
   datePosted DateTime @default(now())
   userId Int
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -71,7 +54,7 @@ model Events {
   description String
   eventDate DateTime
   userId Int
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -83,7 +66,7 @@ model Announcements {
   content String
   datePosted DateTime @default(now())
   userId Int
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -99,9 +82,9 @@ model Videos {
   youtubeID String?
   thumbnailUrl String?
   userId Int
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id])
   categoryId Int
-  category Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category Categories @relation(fields: [categoryId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -133,6 +116,6 @@ model Read_Notifications {
   notificationId Int
   read Boolean @default(false)
   dateRead DateTime @default(now())
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-  notification Notifications @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user Users @relation(fields: [userId], references: [id])
+  notification Notifications @relation(fields: [notificationId], references: [id])
 }

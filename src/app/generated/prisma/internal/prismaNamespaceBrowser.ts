@@ -51,8 +51,14 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  Post: 'Post'
+  Users: 'Users',
+  Testimonies: 'Testimonies',
+  Events: 'Events',
+  Announcements: 'Announcements',
+  Videos: 'Videos',
+  Categories: 'Categories',
+  Notifications: 'Notifications',
+  Read_Notifications: 'Read_Notifications'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -71,24 +77,111 @@ export const TransactionIsolationLevel = {
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const UsersScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  name: 'name',
+  password: 'password',
+  phone: 'phone',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const TestimoniesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
-  published: 'published',
-  authorId: 'authorId'
+  datePosted: 'datePosted',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type TestimoniesScalarFieldEnum = (typeof TestimoniesScalarFieldEnum)[keyof typeof TestimoniesScalarFieldEnum]
+
+
+export const EventsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  eventDate: 'eventDate',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventsScalarFieldEnum = (typeof EventsScalarFieldEnum)[keyof typeof EventsScalarFieldEnum]
+
+
+export const AnnouncementsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  datePosted: 'datePosted',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AnnouncementsScalarFieldEnum = (typeof AnnouncementsScalarFieldEnum)[keyof typeof AnnouncementsScalarFieldEnum]
+
+
+export const VideosScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  preacher: 'preacher',
+  datePreached: 'datePreached',
+  audioUrl: 'audioUrl',
+  videoUrl: 'videoUrl',
+  youtubeID: 'youtubeID',
+  thumbnailUrl: 'thumbnailUrl',
+  userId: 'userId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VideosScalarFieldEnum = (typeof VideosScalarFieldEnum)[keyof typeof VideosScalarFieldEnum]
+
+
+export const CategoriesScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+
+
+export const NotificationsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  message: 'message',
+  dateSent: 'dateSent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
+
+
+export const Read_NotificationsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  notificationId: 'notificationId',
+  read: 'read',
+  dateRead: 'dateRead'
+} as const
+
+export type Read_NotificationsScalarFieldEnum = (typeof Read_NotificationsScalarFieldEnum)[keyof typeof Read_NotificationsScalarFieldEnum]
 
 
 export const SortOrder = {

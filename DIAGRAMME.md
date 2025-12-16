@@ -66,7 +66,6 @@ SUPERADMIN > PASTOR > MODERATOR > USER
 - `readNotifications` → Read_Notifications[] (1:N)
 
 **Comportement :**
-- ✅ Suppression en cascade sur tous les contenus liés
 - ✅ Timestamps automatiques
 - ✅ Email unique (pas de doublons)
 
@@ -88,7 +87,7 @@ SUPERADMIN > PASTOR > MODERATOR > USER
 
 **Relations :**
 ```
-Testimonies (N) → (1) Users [CASCADE DELETE]
+Testimonies (N) → (1) Users 
 ```
 
 **Cas d'usage :**
@@ -114,7 +113,7 @@ Testimonies (N) → (1) Users [CASCADE DELETE]
 
 **Relations :**
 ```
-Events (N) → (1) Users [CASCADE DELETE]
+Events (N) → (1) Users 
 ```
 
 **Cas d'usage :**
@@ -141,7 +140,7 @@ Events (N) → (1) Users [CASCADE DELETE]
 
 **Relations :**
 ```
-Announcements (N) → (1) Users [CASCADE DELETE]
+Announcements (N) → (1) Users 
 ```
 
 **Cas d'usage :**
@@ -174,8 +173,8 @@ Announcements (N) → (1) Users [CASCADE DELETE]
 
 **Relations :**
 ```
-Videos (N) → (1) Users [CASCADE DELETE]
-Videos (N) → (1) Categories [CASCADE DELETE]
+Videos (N) → (1) Users
+Videos (N) → (1) Categories 
 ```
 
 **Cas d'usage :**
@@ -217,7 +216,6 @@ Categories (N) → (1) Users
 - "Jeunesse"
 - "Témoignages"
 
-**Note :** La suppression d'une catégorie supprime toutes les vidéos associées (CASCADE).
 
 ---
 
@@ -261,8 +259,8 @@ Notifications (1) ←→ (N) Read_Notifications
 
 **Relations :**
 ```
-Read_Notifications (N) → (1) Users [CASCADE DELETE]
-Read_Notifications (N) → (1) Notifications [CASCADE DELETE]
+Read_Notifications (N) → (1) Users 
+Read_Notifications (N) → (1) Notifications 
 ```
 
 **Fonctionnement :**
@@ -285,21 +283,21 @@ Read_Notifications (N) → (1) Notifications [CASCADE DELETE]
 │  (Hub Central - Role: SUPERADMIN|PASTOR|MODERATOR|USER)    │
 └─────────────┬───────────────────────────────────────────────┘
               │
-              ├──────────→ Testimonies (1:N) [CASCADE]
+              ├──────────→ Testimonies (1:N) 
               │
-              ├──────────→ Events (1:N) [CASCADE]
+              ├──────────→ Events (1:N) 
               │
-              ├──────────→ Announcements (1:N) [CASCADE]
+              ├──────────→ Announcements (1:N) 
               │
-              ├──────────→ Videos (1:N) [CASCADE]
+              ├──────────→ Videos (1:N) 
               │                 │
-              │                 └──→ Categories (N:1) [CASCADE]
+              │                 └──→ Categories (N:1) 
               │                         ↑
               ├─────────────────────────┘ (1:N)
               │
-              └──────────→ Read_Notifications (1:N) [CASCADE]
+              └──────────→ Read_Notifications (1:N) 
                                    │
-                                   └──→ Notifications (N:1) [CASCADE]
+                                   └──→ Notifications (N:1) 
 ```
 
 ---
@@ -376,22 +374,14 @@ const unreadNotifications = await prisma.read_Notifications.findMany({
 
 ### 🔐 Sécurité et Intégrité
 
-#### 1. Suppression en Cascade
-```prisma
-onDelete: Cascade
-```
-- ✅ Suppression d'un utilisateur → supprime tous ses contenus
-- ✅ Suppression d'une catégorie → supprime toutes ses vidéos
-- ✅ Suppression d'une notification → supprime tous les statuts de lecture
-
-#### 2. Contraintes d'Unicité
+#### 1. Contraintes d'Unicité
 ```prisma
 @unique
 ```
 - `Users.email` : Pas de doublons d'emails
 - `Categories.title` : Pas de catégories en double
 
-#### 3. Valeurs par Défaut
+#### 2. Valeurs par Défaut
 ```prisma
 @default()
 ```
@@ -614,7 +604,6 @@ npx prisma db seed
 - **Modèles totaux :** 8
 - **Énumérations :** 1 (Role)
 - **Relations :** 11
-- **Suppressions en cascade :** 7
 - **Contraintes uniques :** 2
 - **Champs timestamp :** 16 (createdAt/updatedAt)
 
@@ -624,7 +613,6 @@ npx prisma db seed
 
 - [x] Énumération Role définie
 - [x] Relations Many-to-One configurées
-- [x] Suppression en cascade sur tous les contenus
 - [x] Timestamps automatiques sur tous les modèles
 - [x] Contraintes d'unicité appropriées
 - [x] Table de jonction pour notifications
