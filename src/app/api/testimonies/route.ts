@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { createTestimoniesSchema, updateTestimoniesSchema } from "@/validators/testimonies.schema";
 
 // lister les témoignages
 export async function GET() {
@@ -23,11 +24,23 @@ export async function GET() {
 
 // créer un témoignage
 export async function POST(req: Request) {
-  try {
-    const request = await req.json();
+    const body = await req.json();
 
+    // Validation avec Zod
+    const parseResult = createTestimoniesSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          error: "Données de témoignage invalides.",
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
+    // vérifier que l'utilisateur existe
     const user = await prisma.users.findUnique({
-      where: { id: request.userId },
+      where: { id: parseResult.data.userId },
     });
     if (!user) {
       return NextResponse.json(
@@ -35,66 +48,86 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    // créer le témoignage
     const created = await prisma.testimonies.create({
       data: {
-        title: request.title,
-        content: request.content,
-        userId: request.userId,
+        title: parseResult.data.title,
+        content: parseResult.data.content,
+        userId: parseResult.data.userId,
         datePosted: new Date(),
       },
     });
 
-    return NextResponse.json(created, { status: 201 });
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("POST /api/testimonies error", error.message);
-    }
-    return NextResponse.json(
-      {
-        error: "Erreur lors de la création du témoignage.",
-        details:
-          process.env.NODE_ENV === "development" ? String(error) : undefined,
+    // créer une notification générale
+    const createNotification = await prisma.notifications.create({
+      data: {
+        title: "Un nouveau témoignage",
+        message: `Titre : ${created.title}`,
       },
-      { status: 500 }
-    );
-  }
+    });
+
+    // créer une notification de lecture pour tous les autres utilisateurs
+    const otherUsers = await prisma.users.findMany({
+      where: { id: { not: created.userId } },
+      select: { id: true },
+    });
+    if (otherUsers.length > 0) {
+      const readData = otherUsers.map((u) => ({
+        userId: u.id,
+        notificationId: createNotification.id,
+        read: false,
+      }));
+      await prisma.read_Notifications.createMany({
+        data: readData,
+        skipDuplicates: true,
+      });
+    }
+
+    // renvoyer sans id
+    const { id, ...createdWithoutId } = created;
+    return NextResponse.json(createdWithoutId, { status: 201 });
+
 }
 
 // modifier un témoignage
 export async function PUT(req: Request) {
-  try {
-    const request = await req.json();
+    const body = await req.json();
+
+    // validation
+    const parseResult = updateTestimoniesSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          error: "Données de témoignage invalides.",
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
     const existing = await prisma.testimonies.findUnique({
-      where: { id: request.id },
+      where: { id: parseResult.data.id },
     });
     if (!existing)
       return NextResponse.json(
         { error: "Témoignage introuvable." },
         { status: 404 }
       );
-    const newTestimony = await prisma.testimonies.update({
-      where: { id: request.id },
+
+    const updated = await prisma.testimonies.update({
+      where: { id: parseResult.data.id },
       data: {
-        title: request.title ?? existing.title,
-        content: request.content ?? existing.content,
-        userId: request.userId ?? existing.userId,
+        title: parseResult.data.title ?? existing.title,
+        content: parseResult.data.content ?? existing.content,
+        // userId is not updatable via schema, keep existing
         datePosted: existing.datePosted,
       },
     });
-    return NextResponse.json(newTestimony, { status: 200 });
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("PUT /api/testimonies error", error.message);
-    }
-    return NextResponse.json(
-      {
-        error: "Erreur lors de la mise à jour de la catégorie.",
-        details:
-          process.env.NODE_ENV === "development" ? String(error) : undefined,
-      },
-      { status: 500 }
-    );
-  }
+
+    const { id, ...updatedWithoutId } = updated;
+    return NextResponse.json(updatedWithoutId, { status: 200 });
+  
 }
 
 // Supprimer un témoignage
