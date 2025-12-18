@@ -1,14 +1,8 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { randomBytes, scryptSync } from "node:crypto";
 import { createUserSchema, updateUserSchema } from "@/validators/users.schema";
-
+import * as argon2 from "argon2";
 // Utility: hash and verify using scrypt (no extra deps)
-function hashPassword(password: string) {
-  const salt = randomBytes(16).toString("hex");
-  const derived = scryptSync(password, salt, 64).toString("hex");
-  return `${salt}:${derived}`;
-}
 
 // Lire
 
@@ -16,7 +10,7 @@ export async function GET() {
   try {
     const users = await prisma.users.findMany();
     const usersWithoutPasswords = users.map(({ password, ...user }) => user);
-    return NextResponse.json(usersWithoutPasswords, { status: 200 });
+    return NextResponse.json({message: "Utilisateurs chargés.",usersWithoutPasswords}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -65,7 +59,7 @@ export async function POST(req: Request) {
   const { password, ...userData } = parseResult.data;
 
   // hachage du mot de passe et création de l'utilisateur
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await argon2.hash(password);
 
   // Création de l'utilisateur dans la base de données
   const newUser = await prisma.users.create({
@@ -75,7 +69,7 @@ export async function POST(req: Request) {
     },
   });
 
-  return NextResponse.json(userData, { status: 201 });
+  return NextResponse.json({message: "Utilisateur créé avec succès.",userData}, { status: 201 });
 }
 
 // Mettre à jour
@@ -107,7 +101,7 @@ export async function PUT(req: Request) {
 
   // Hasher le mot de passe si fourni
   if (parseResult.data.password) {
-    parseResult.data.password = hashPassword(parseResult.data.password);
+    parseResult.data.password = await argon2.hash(parseResult.data.password)
   }
 
   // Récupération des données ecepté le id de l'utilisateur
@@ -127,7 +121,7 @@ export async function PUT(req: Request) {
   // retirer l'id et le mot de passe avant de renvoyer la réponse
   const { id: _, password: __, ...userPublic } = updatedUser;
 
-  return NextResponse.json(userPublic, { status: 200 });
+  return NextResponse.json({message: "Utilisateur modifié avec succès.",userPublic}, { status: 200 });
 }
 
 // Supprimer

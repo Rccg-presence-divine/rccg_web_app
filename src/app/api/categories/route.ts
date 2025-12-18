@@ -8,7 +8,7 @@ import {
 export async function GET() {
   try {
     const categories = await prisma.categories.findMany();
-    return NextResponse.json(categories, { status: 200 });
+    return NextResponse.json({message: "Liste des catégories chargés.",categories}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
   const { id, ...categoryWithoutId } = newCategory;
 
   // Renvoyer la réponse
-  return NextResponse.json(categoryWithoutId, { status: 201 });
+  return NextResponse.json({message: "Catégorie crée.",categoryWithoutId}, { status: 201 });
 }
 // mettre à jour une catégorie
 export async function PUT(req: Request) {
@@ -102,7 +102,7 @@ export async function PUT(req: Request) {
 
   // enlever l'id de la catégorie et renvoyer la catégorie
   const { id, ...categoryWithoutId } = updatedCategory;
-  return NextResponse.json(categoryWithoutId, { status: 200 });
+  return NextResponse.json({message: "Catégorie mise à jour.",categoryWithoutId}, { status: 200 });
 }
 
 // supprimer une catégorie

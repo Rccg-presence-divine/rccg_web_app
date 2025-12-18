@@ -9,7 +9,7 @@ import {
 export async function GET() {
   try {
     const events = await prisma.events.findMany();
-    return NextResponse.json(events, { status: 200 });
+    return NextResponse.json({message: "Liste des événements chargés.",events}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
   // afficher l'événement créer sans id
   const { id, ...eventtWithoutId } = event;
   // renvoyer la réponse
-  return NextResponse.json(eventtWithoutId, { status: 201 });
+  return NextResponse.json({message: "Evénement crée.",eventtWithoutId}, { status: 201 });
 }
 
 // mettre à jour un événement
@@ -125,7 +125,7 @@ export async function PUT(req: Request) {
   const { id, ...eventtWithoutId } = event;
 
   // renvoyer la réponse
-  return NextResponse.json(eventtWithoutId, { status: 200 });
+  return NextResponse.json({message: "Evénement mis à jour.",eventtWithoutId}, { status: 200 });
 }
 
 // supprimer un événement

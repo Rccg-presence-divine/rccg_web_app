@@ -9,7 +9,7 @@ import {
 export async function GET() {
   try {
     const announcements = await prisma.announcements.findMany();
-    return NextResponse.json(announcements, { status: 200 });
+    return NextResponse.json({message: "List des annonces chargés.",announcements}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
   // afficher l'annonce créer sans id
   const { id, ...announcementWithoutId } = announcement;
   // renvoyer la réponse
-  return NextResponse.json(announcementWithoutId, { status: 201 });
+  return NextResponse.json({message: "Annonce crée.",announcementWithoutId}, { status: 201 });
 }
 
 // mettre à jour une annonce
@@ -125,7 +125,7 @@ export async function PUT(req: Request) {
   const { id, ...announcementWithoutId } = announcement;
 
   // renvoyer la réponse
-  return NextResponse.json(announcementWithoutId, { status: 200 });
+  return NextResponse.json({message: "Annonce mise à jour.",announcementWithoutId}, { status: 200 });
 }
 // supprimer une annonce
 export async function DELETE(req: Request) {

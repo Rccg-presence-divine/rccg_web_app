@@ -15,7 +15,7 @@ export async function GET() {
         },
       },
     });
-    return NextResponse.json(videos, { status: 200 });
+    return NextResponse.json({message: "Liste des vidéos chargées.",videos}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -117,7 +117,7 @@ export async function POST(req: Request) {
 
   // renvoyer sans id
   const { id, ...videoWithoutId } = newVideo;
-  return NextResponse.json(videoWithoutId, { status: 201 });
+  return NextResponse.json({message: "Vidéo crée avec succès.",videoWithoutId}, { status: 201 });
 }
 // modifier une vidéo
 export async function PUT(req: Request) {
@@ -170,7 +170,7 @@ export async function PUT(req: Request) {
   });
 
   const { id, ...videoWithoutId } = updatedVideo;
-  return NextResponse.json(videoWithoutId, { status: 200 });
+  return NextResponse.json({message: "Vidéo modifié avec succès.",videoWithoutId}, { status: 200 });
 }
 
 // supprimer une vidéo

@@ -6,7 +6,7 @@ import { createTestimoniesSchema, updateTestimoniesSchema } from "@/validators/t
 export async function GET() {
   try {
     const testimonies = await prisma.testimonies.findMany();
-    return NextResponse.json(testimonies, { status: 200 });
+    return NextResponse.json({message: "Liste des témoignages chargés.",testimonies}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("GET /api/testimonies error:", error.message);
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
 
     // renvoyer sans id
     const { id, ...createdWithoutId } = created;
-    return NextResponse.json(createdWithoutId, { status: 201 });
+    return NextResponse.json({message: "Témoignage créé avec succès.",createdWithoutId}, { status: 201 });
 
 }
 
@@ -126,7 +126,7 @@ export async function PUT(req: Request) {
     });
 
     const { id, ...updatedWithoutId } = updated;
-    return NextResponse.json(updatedWithoutId, { status: 200 });
+    return NextResponse.json({message: "Témoignage modifié avec succès.",updatedWithoutId}, { status: 200 });
   
 }
 
