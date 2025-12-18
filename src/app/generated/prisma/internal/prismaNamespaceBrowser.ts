@@ -55,7 +55,7 @@ export const ModelName = {
   Testimonies: 'Testimonies',
   Events: 'Events',
   Announcements: 'Announcements',
-  Videos: 'Videos',
+  Medias: 'Medias',
   Categories: 'Categories',
   Notifications: 'Notifications',
   Read_Notifications: 'Read_Notifications'
@@ -130,14 +130,14 @@ export const AnnouncementsScalarFieldEnum = {
 export type AnnouncementsScalarFieldEnum = (typeof AnnouncementsScalarFieldEnum)[keyof typeof AnnouncementsScalarFieldEnum]
 
 
-export const VideosScalarFieldEnum = {
+export const MediasScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
   preacher: 'preacher',
   datePreached: 'datePreached',
-  audioUrl: 'audioUrl',
-  videoUrl: 'videoUrl',
+  mediaUrl: 'mediaUrl',
+  isVideo: 'isVideo',
   youtubeID: 'youtubeID',
   thumbnailUrl: 'thumbnailUrl',
   userId: 'userId',
@@ -146,7 +146,7 @@ export const VideosScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VideosScalarFieldEnum = (typeof VideosScalarFieldEnum)[keyof typeof VideosScalarFieldEnum]
+export type MediasScalarFieldEnum = (typeof MediasScalarFieldEnum)[keyof typeof MediasScalarFieldEnum]
 
 
 export const CategoriesScalarFieldEnum = {

@@ -388,7 +388,7 @@ export const ModelName = {
   Testimonies: 'Testimonies',
   Events: 'Events',
   Announcements: 'Announcements',
-  Videos: 'Videos',
+  Medias: 'Medias',
   Categories: 'Categories',
   Notifications: 'Notifications',
   Read_Notifications: 'Read_Notifications'
@@ -407,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "testimonies" | "events" | "announcements" | "videos" | "categories" | "notifications" | "read_Notifications"
+    modelProps: "users" | "testimonies" | "events" | "announcements" | "medias" | "categories" | "notifications" | "read_Notifications"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -707,77 +707,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Videos: {
-      payload: Prisma.$VideosPayload<ExtArgs>
-      fields: Prisma.VideosFieldRefs
+    Medias: {
+      payload: Prisma.$MediasPayload<ExtArgs>
+      fields: Prisma.MediasFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VideosFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload> | null
+          args: Prisma.MediasFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VideosFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         findFirst: {
-          args: Prisma.VideosFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload> | null
+          args: Prisma.MediasFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VideosFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         findMany: {
-          args: Prisma.VideosFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>[]
+          args: Prisma.MediasFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>[]
         }
         create: {
-          args: Prisma.VideosCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         createMany: {
-          args: Prisma.VideosCreateManyArgs<ExtArgs>
+          args: Prisma.MediasCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VideosCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>[]
+          args: Prisma.MediasCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>[]
         }
         delete: {
-          args: Prisma.VideosDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         update: {
-          args: Prisma.VideosUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         deleteMany: {
-          args: Prisma.VideosDeleteManyArgs<ExtArgs>
+          args: Prisma.MediasDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VideosUpdateManyArgs<ExtArgs>
+          args: Prisma.MediasUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VideosUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>[]
+          args: Prisma.MediasUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>[]
         }
         upsert: {
-          args: Prisma.VideosUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VideosPayload>
+          args: Prisma.MediasUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediasPayload>
         }
         aggregate: {
-          args: Prisma.VideosAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVideos>
+          args: Prisma.MediasAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMedias>
         }
         groupBy: {
-          args: Prisma.VideosGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VideosGroupByOutputType>[]
+          args: Prisma.MediasGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MediasGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VideosCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VideosCountAggregateOutputType> | number
+          args: Prisma.MediasCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MediasCountAggregateOutputType> | number
         }
       }
     }
@@ -1095,14 +1095,14 @@ export const AnnouncementsScalarFieldEnum = {
 export type AnnouncementsScalarFieldEnum = (typeof AnnouncementsScalarFieldEnum)[keyof typeof AnnouncementsScalarFieldEnum]
 
 
-export const VideosScalarFieldEnum = {
+export const MediasScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
   preacher: 'preacher',
   datePreached: 'datePreached',
-  audioUrl: 'audioUrl',
-  videoUrl: 'videoUrl',
+  mediaUrl: 'mediaUrl',
+  isVideo: 'isVideo',
   youtubeID: 'youtubeID',
   thumbnailUrl: 'thumbnailUrl',
   userId: 'userId',
@@ -1111,7 +1111,7 @@ export const VideosScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type VideosScalarFieldEnum = (typeof VideosScalarFieldEnum)[keyof typeof VideosScalarFieldEnum]
+export type MediasScalarFieldEnum = (typeof MediasScalarFieldEnum)[keyof typeof MediasScalarFieldEnum]
 
 
 export const CategoriesScalarFieldEnum = {
@@ -1354,7 +1354,7 @@ export type GlobalOmitConfig = {
   testimonies?: Prisma.TestimoniesOmit
   events?: Prisma.EventsOmit
   announcements?: Prisma.AnnouncementsOmit
-  videos?: Prisma.VideosOmit
+  medias?: Prisma.MediasOmit
   categories?: Prisma.CategoriesOmit
   notifications?: Prisma.NotificationsOmit
   read_Notifications?: Prisma.Read_NotificationsOmit

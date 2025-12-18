@@ -38,10 +38,10 @@ export type Events = Prisma.EventsModel
  */
 export type Announcements = Prisma.AnnouncementsModel
 /**
- * Model Videos
+ * Model Medias
  * 
  */
-export type Videos = Prisma.VideosModel
+export type Medias = Prisma.MediasModel
 /**
  * Model Categories
  * 

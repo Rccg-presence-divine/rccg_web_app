@@ -11,7 +11,7 @@ export const registerSchema = z.object({
   name: z.string().min(2).max(100),
   password: z.string().min(6).max(100),
   verifyPassword: z.string().min(6).max(100),
-  phone: z.string().min(10).max(15).optional(),
+  phone: z.string().optional(),
 });
 
 export const forgotPasswordSchema = z.object({

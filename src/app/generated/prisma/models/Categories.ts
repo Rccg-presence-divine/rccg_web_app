@@ -229,7 +229,7 @@ export type CategoriesWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Categories"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Categories"> | Date | string
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
-  videos?: Prisma.VideosListRelationFilter
+  media?: Prisma.MediasListRelationFilter
 }
 
 export type CategoriesOrderByWithRelationInput = {
@@ -240,7 +240,7 @@ export type CategoriesOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UsersOrderByWithRelationInput
-  videos?: Prisma.VideosOrderByRelationAggregateInput
+  media?: Prisma.MediasOrderByRelationAggregateInput
 }
 
 export type CategoriesWhereUniqueInput = Prisma.AtLeast<{
@@ -254,7 +254,7 @@ export type CategoriesWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Categories"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Categories"> | Date | string
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
-  videos?: Prisma.VideosListRelationFilter
+  media?: Prisma.MediasListRelationFilter
 }, "id" | "title">
 
 export type CategoriesOrderByWithAggregationInput = {
@@ -289,7 +289,7 @@ export type CategoriesCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UsersCreateNestedOneWithoutCategoriesInput
-  videos?: Prisma.VideosCreateNestedManyWithoutCategoryInput
+  media?: Prisma.MediasCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoriesUncheckedCreateInput = {
@@ -299,7 +299,7 @@ export type CategoriesUncheckedCreateInput = {
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  videos?: Prisma.VideosUncheckedCreateNestedManyWithoutCategoryInput
+  media?: Prisma.MediasUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoriesUpdateInput = {
@@ -308,7 +308,7 @@ export type CategoriesUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UsersUpdateOneRequiredWithoutCategoriesNestedInput
-  videos?: Prisma.VideosUpdateManyWithoutCategoryNestedInput
+  media?: Prisma.MediasUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoriesUncheckedUpdateInput = {
@@ -318,7 +318,7 @@ export type CategoriesUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  videos?: Prisma.VideosUncheckedUpdateManyWithoutCategoryNestedInput
+  media?: Prisma.MediasUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoriesCreateManyInput = {
@@ -440,18 +440,18 @@ export type CategoriesUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CategoriesScalarWhereInput | Prisma.CategoriesScalarWhereInput[]
 }
 
-export type CategoriesCreateNestedOneWithoutVideosInput = {
-  create?: Prisma.XOR<Prisma.CategoriesCreateWithoutVideosInput, Prisma.CategoriesUncheckedCreateWithoutVideosInput>
-  connectOrCreate?: Prisma.CategoriesCreateOrConnectWithoutVideosInput
+export type CategoriesCreateNestedOneWithoutMediaInput = {
+  create?: Prisma.XOR<Prisma.CategoriesCreateWithoutMediaInput, Prisma.CategoriesUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.CategoriesCreateOrConnectWithoutMediaInput
   connect?: Prisma.CategoriesWhereUniqueInput
 }
 
-export type CategoriesUpdateOneRequiredWithoutVideosNestedInput = {
-  create?: Prisma.XOR<Prisma.CategoriesCreateWithoutVideosInput, Prisma.CategoriesUncheckedCreateWithoutVideosInput>
-  connectOrCreate?: Prisma.CategoriesCreateOrConnectWithoutVideosInput
-  upsert?: Prisma.CategoriesUpsertWithoutVideosInput
+export type CategoriesUpdateOneRequiredWithoutMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoriesCreateWithoutMediaInput, Prisma.CategoriesUncheckedCreateWithoutMediaInput>
+  connectOrCreate?: Prisma.CategoriesCreateOrConnectWithoutMediaInput
+  upsert?: Prisma.CategoriesUpsertWithoutMediaInput
   connect?: Prisma.CategoriesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoriesUpdateToOneWithWhereWithoutVideosInput, Prisma.CategoriesUpdateWithoutVideosInput>, Prisma.CategoriesUncheckedUpdateWithoutVideosInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoriesUpdateToOneWithWhereWithoutMediaInput, Prisma.CategoriesUpdateWithoutMediaInput>, Prisma.CategoriesUncheckedUpdateWithoutMediaInput>
 }
 
 export type CategoriesCreateWithoutUserInput = {
@@ -459,7 +459,7 @@ export type CategoriesCreateWithoutUserInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  videos?: Prisma.VideosCreateNestedManyWithoutCategoryInput
+  media?: Prisma.MediasCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoriesUncheckedCreateWithoutUserInput = {
@@ -468,7 +468,7 @@ export type CategoriesUncheckedCreateWithoutUserInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  videos?: Prisma.VideosUncheckedCreateNestedManyWithoutCategoryInput
+  media?: Prisma.MediasUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoriesCreateOrConnectWithoutUserInput = {
@@ -509,7 +509,7 @@ export type CategoriesScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Categories"> | Date | string
 }
 
-export type CategoriesCreateWithoutVideosInput = {
+export type CategoriesCreateWithoutMediaInput = {
   title: string
   description?: string | null
   createdAt?: Date | string
@@ -517,7 +517,7 @@ export type CategoriesCreateWithoutVideosInput = {
   user: Prisma.UsersCreateNestedOneWithoutCategoriesInput
 }
 
-export type CategoriesUncheckedCreateWithoutVideosInput = {
+export type CategoriesUncheckedCreateWithoutMediaInput = {
   id?: number
   title: string
   description?: string | null
@@ -526,23 +526,23 @@ export type CategoriesUncheckedCreateWithoutVideosInput = {
   updatedAt?: Date | string
 }
 
-export type CategoriesCreateOrConnectWithoutVideosInput = {
+export type CategoriesCreateOrConnectWithoutMediaInput = {
   where: Prisma.CategoriesWhereUniqueInput
-  create: Prisma.XOR<Prisma.CategoriesCreateWithoutVideosInput, Prisma.CategoriesUncheckedCreateWithoutVideosInput>
+  create: Prisma.XOR<Prisma.CategoriesCreateWithoutMediaInput, Prisma.CategoriesUncheckedCreateWithoutMediaInput>
 }
 
-export type CategoriesUpsertWithoutVideosInput = {
-  update: Prisma.XOR<Prisma.CategoriesUpdateWithoutVideosInput, Prisma.CategoriesUncheckedUpdateWithoutVideosInput>
-  create: Prisma.XOR<Prisma.CategoriesCreateWithoutVideosInput, Prisma.CategoriesUncheckedCreateWithoutVideosInput>
+export type CategoriesUpsertWithoutMediaInput = {
+  update: Prisma.XOR<Prisma.CategoriesUpdateWithoutMediaInput, Prisma.CategoriesUncheckedUpdateWithoutMediaInput>
+  create: Prisma.XOR<Prisma.CategoriesCreateWithoutMediaInput, Prisma.CategoriesUncheckedCreateWithoutMediaInput>
   where?: Prisma.CategoriesWhereInput
 }
 
-export type CategoriesUpdateToOneWithWhereWithoutVideosInput = {
+export type CategoriesUpdateToOneWithWhereWithoutMediaInput = {
   where?: Prisma.CategoriesWhereInput
-  data: Prisma.XOR<Prisma.CategoriesUpdateWithoutVideosInput, Prisma.CategoriesUncheckedUpdateWithoutVideosInput>
+  data: Prisma.XOR<Prisma.CategoriesUpdateWithoutMediaInput, Prisma.CategoriesUncheckedUpdateWithoutMediaInput>
 }
 
-export type CategoriesUpdateWithoutVideosInput = {
+export type CategoriesUpdateWithoutMediaInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -550,7 +550,7 @@ export type CategoriesUpdateWithoutVideosInput = {
   user?: Prisma.UsersUpdateOneRequiredWithoutCategoriesNestedInput
 }
 
-export type CategoriesUncheckedUpdateWithoutVideosInput = {
+export type CategoriesUncheckedUpdateWithoutMediaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -572,7 +572,7 @@ export type CategoriesUpdateWithoutUserInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  videos?: Prisma.VideosUpdateManyWithoutCategoryNestedInput
+  media?: Prisma.MediasUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoriesUncheckedUpdateWithoutUserInput = {
@@ -581,7 +581,7 @@ export type CategoriesUncheckedUpdateWithoutUserInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  videos?: Prisma.VideosUncheckedUpdateManyWithoutCategoryNestedInput
+  media?: Prisma.MediasUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoriesUncheckedUpdateManyWithoutUserInput = {
@@ -598,11 +598,11 @@ export type CategoriesUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type CategoriesCountOutputType = {
-  videos: number
+  media: number
 }
 
 export type CategoriesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  videos?: boolean | CategoriesCountOutputTypeCountVideosArgs
+  media?: boolean | CategoriesCountOutputTypeCountMediaArgs
 }
 
 /**
@@ -618,8 +618,8 @@ export type CategoriesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * CategoriesCountOutputType without action
  */
-export type CategoriesCountOutputTypeCountVideosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VideosWhereInput
+export type CategoriesCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MediasWhereInput
 }
 
 
@@ -631,7 +631,7 @@ export type CategoriesSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
-  videos?: boolean | Prisma.Categories$videosArgs<ExtArgs>
+  media?: boolean | Prisma.Categories$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categories"]>
 
@@ -667,7 +667,7 @@ export type CategoriesSelectScalar = {
 export type CategoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["categories"]>
 export type CategoriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
-  videos?: boolean | Prisma.Categories$videosArgs<ExtArgs>
+  media?: boolean | Prisma.Categories$mediaArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoriesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -681,7 +681,7 @@ export type $CategoriesPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Categories"
   objects: {
     user: Prisma.$UsersPayload<ExtArgs>
-    videos: Prisma.$VideosPayload<ExtArgs>[]
+    media: Prisma.$MediasPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1085,7 +1085,7 @@ readonly fields: CategoriesFieldRefs;
 export interface Prisma__CategoriesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  videos<T extends Prisma.Categories$videosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Categories$videosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VideosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  media<T extends Prisma.Categories$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Categories$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1517,27 +1517,27 @@ export type CategoriesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Categories.videos
+ * Categories.media
  */
-export type Categories$videosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Categories$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Videos
+   * Select specific fields to fetch from the Medias
    */
-  select?: Prisma.VideosSelect<ExtArgs> | null
+  select?: Prisma.MediasSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Videos
+   * Omit specific fields from the Medias
    */
-  omit?: Prisma.VideosOmit<ExtArgs> | null
+  omit?: Prisma.MediasOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.VideosInclude<ExtArgs> | null
-  where?: Prisma.VideosWhereInput
-  orderBy?: Prisma.VideosOrderByWithRelationInput | Prisma.VideosOrderByWithRelationInput[]
-  cursor?: Prisma.VideosWhereUniqueInput
+  include?: Prisma.MediasInclude<ExtArgs> | null
+  where?: Prisma.MediasWhereInput
+  orderBy?: Prisma.MediasOrderByWithRelationInput | Prisma.MediasOrderByWithRelationInput[]
+  cursor?: Prisma.MediasWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.VideosScalarFieldEnum | Prisma.VideosScalarFieldEnum[]
+  distinct?: Prisma.MediasScalarFieldEnum | Prisma.MediasScalarFieldEnum[]
 }
 
 /**

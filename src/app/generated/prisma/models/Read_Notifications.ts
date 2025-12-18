@@ -456,10 +456,6 @@ export type Read_NotificationsUncheckedUpdateManyWithoutNotificationNestedInput 
   deleteMany?: Prisma.Read_NotificationsScalarWhereInput | Prisma.Read_NotificationsScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type Read_NotificationsCreateWithoutUserInput = {
   read?: boolean
   dateRead?: Date | string

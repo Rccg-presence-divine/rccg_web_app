@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { loginSchema } from "@/validators/auth.schema";
+import { signToken } from "@/lib/jwt";
 import * as argon2 from "argon2";
 
 export async function POST(req: Request) {
@@ -57,10 +58,18 @@ export async function POST(req: Request) {
     );
   }
 
-  // Retirer le mot de passe avant de renvoyer l'utilisateur
-  const { password, ...userPublic } = existingUser;
-  return NextResponse.json(userPublic, {
-    status: 200,
-    statusText: "Utilisateur connecté avec succès.",
+  // Créer et renvoyer le token JWT
+  const token = await signToken({
+    id: existingUser.id,
+    role: existingUser.role,
   });
+  // Retirer le mot de passe avant de renvoyer l'utilisateur
+  const { password, ...user } = existingUser;
+  return NextResponse.json(
+    { message: `Connexion reussie`, token: `Token: ${token}`, user },
+    {
+      status: 200,
+      statusText: "Utilisateur connecté avec succès.",
+    }
+  );
 }

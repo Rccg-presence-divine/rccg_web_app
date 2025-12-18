@@ -1,21 +1,18 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import {
-  createVideoSchema,
-  updateVideoSchema,
-} from "@/validators/videos.schema";
+import { createMediaSchema, updateMediaSchema } from "@/validators/medias.schema";
 
 // liste les vidéos
 export async function GET() {
   try {
-    const videos = await prisma.videos.findMany({
+    const medias = await prisma.medias.findMany({
       include: {
         category: {
           select: { title: true },
         },
       },
     });
-    return NextResponse.json({message: "Liste des vidéos chargées.",videos}, { status: 200 });
+    return NextResponse.json({message: "Liste des vidéos chargées.",medias}, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
@@ -36,7 +33,7 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   // coerce date string to Date for zod
-  const parseResult = createVideoSchema.safeParse({
+  const parseResult = createMediaSchema.safeParse({
     ...body,
     datePreached: body.datePreached ? new Date(body.datePreached) : new Date(),
   });
@@ -72,14 +69,14 @@ export async function POST(req: Request) {
   }
 
   // créer la vidéo
-  const newVideo = await prisma.videos.create({
+  const newVideo = await prisma.medias.create({
     data: {
       title: parseResult.data.title,
       description: parseResult.data.description,
       preacher: parseResult.data.preacher,
       youtubeID: parseResult.data.youtubeID,
-      videoUrl: parseResult.data.videoUrl,
-      audioUrl: parseResult.data.audioUrl,
+      mediaUrl: parseResult.data.mediaUrl,
+      isVideo: parseResult.data.isVideo,
       userId: parseResult.data.userId,
       categoryId: parseResult.data.categoryId,
       thumbnailUrl: parseResult.data.thumbnailUrl,
@@ -124,7 +121,7 @@ export async function PUT(req: Request) {
   const body = await req.json();
 
   // validation
-  const parseResult = updateVideoSchema.safeParse(body);
+  const parseResult = updateMediaSchema.safeParse(body);
   if (!parseResult.success) {
     return NextResponse.json(
       {
@@ -135,7 +132,7 @@ export async function PUT(req: Request) {
     );
   }
 
-  const existingVideo = await prisma.videos.findUnique({
+  const existingVideo = await prisma.medias.findUnique({
     where: { id: parseResult.data.id },
   });
   if (!existingVideo) {
@@ -155,15 +152,15 @@ export async function PUT(req: Request) {
     }
   }
 
-  const updatedVideo = await prisma.videos.update({
+  const updatedVideo = await prisma.medias.update({
     where: { id: parseResult.data.id },
     data: {
       title: parseResult.data.title ?? existingVideo.title,
       description: parseResult.data.description ?? existingVideo.description,
       preacher: parseResult.data.preacher ?? existingVideo.preacher,
       youtubeID: parseResult.data.youtubeID ?? existingVideo.youtubeID,
-      videoUrl: parseResult.data.videoUrl ?? existingVideo.videoUrl,
-      audioUrl: parseResult.data.audioUrl ?? existingVideo.audioUrl,
+      mediaUrl: parseResult.data.mediaUrl ?? existingVideo.mediaUrl,
+      isVideo: parseResult.data.isVideo ?? existingVideo.isVideo,
       categoryId: parseResult.data.categoryId ?? existingVideo.categoryId,
       thumbnailUrl: parseResult.data.thumbnailUrl ?? existingVideo.thumbnailUrl,
     },
@@ -177,7 +174,7 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const { id } = await req.json();
-    const existingVideo = await prisma.videos.findUnique({
+    const existingVideo = await prisma.medias.findUnique({
       where: { id: id },
     });
     if (!existingVideo) {
@@ -186,7 +183,7 @@ export async function DELETE(req: Request) {
         { status: 404 }
       );
     }
-    await prisma.videos.delete({
+    await prisma.medias.delete({
       where: { id: id },
     });
     return NextResponse.json(
