@@ -4,7 +4,7 @@ import { headers } from "next/headers";
  * Type d'utilisateur injecté par le proxy
  */
 export type AuthUser = {
-  userId: string; // 
+  userId: number; // 
   role: "SUPERADMIN" | "PASTOR" | "MODERATOR" | "USER";
 };
 
@@ -29,7 +29,7 @@ export async function getAuthUser(): Promise<AuthUser> {
   }
 
   return {
-    userId,
+    userId: Number(userId),
     role: role as AuthUser["role"],
   };
 }

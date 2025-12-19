@@ -3,7 +3,6 @@ import { z } from "zod";
 export const createTestimoniesSchema = z.object({
   title: z.string().min(5).max(100),
   content: z.string().min(10),
-  userId: z.int(),
 });
 
 export const updateTestimoniesSchema = z.object({

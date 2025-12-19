@@ -7,7 +7,6 @@ export const createAnnouncementsSchema = z.object({
     .min(10)
     .max(1000, "Le contenu est trop long")
     .describe("Le contenu de l'annonce"),
-  userId: z.int(),
 });
 
 export const updateAnnouncementsSchema = z.object({

@@ -58,7 +58,8 @@ export const ModelName = {
   Medias: 'Medias',
   Categories: 'Categories',
   Notifications: 'Notifications',
-  Read_Notifications: 'Read_Notifications'
+  Read_Notifications: 'Read_Notifications',
+  RefreshToken: 'RefreshToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -182,6 +183,18 @@ export const Read_NotificationsScalarFieldEnum = {
 } as const
 
 export type Read_NotificationsScalarFieldEnum = (typeof Read_NotificationsScalarFieldEnum)[keyof typeof Read_NotificationsScalarFieldEnum]
+
+
+export const RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  revoked: 'revoked',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
 
 
 export const SortOrder = {

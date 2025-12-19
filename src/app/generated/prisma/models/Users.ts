@@ -246,6 +246,7 @@ export type UsersWhereInput = {
   readNotifications?: Prisma.Read_NotificationsListRelationFilter
   medias?: Prisma.MediasListRelationFilter
   categories?: Prisma.CategoriesListRelationFilter
+  refreshTokens?: Prisma.RefreshTokenListRelationFilter
 }
 
 export type UsersOrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type UsersOrderByWithRelationInput = {
   readNotifications?: Prisma.Read_NotificationsOrderByRelationAggregateInput
   medias?: Prisma.MediasOrderByRelationAggregateInput
   categories?: Prisma.CategoriesOrderByRelationAggregateInput
+  refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
 }
 
 export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -283,6 +285,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   readNotifications?: Prisma.Read_NotificationsListRelationFilter
   medias?: Prisma.MediasListRelationFilter
   categories?: Prisma.CategoriesListRelationFilter
+  refreshTokens?: Prisma.RefreshTokenListRelationFilter
 }, "id" | "email" | "phone">
 
 export type UsersOrderByWithAggregationInput = {
@@ -329,6 +332,7 @@ export type UsersCreateInput = {
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateInput = {
@@ -346,6 +350,7 @@ export type UsersUncheckedCreateInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersUpdateInput = {
@@ -362,6 +367,7 @@ export type UsersUpdateInput = {
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateInput = {
@@ -379,6 +385,7 @@ export type UsersUncheckedUpdateInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateManyInput = {
@@ -567,6 +574,20 @@ export type UsersUpdateOneRequiredWithoutReadNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutReadNotificationsInput, Prisma.UsersUpdateWithoutReadNotificationsInput>, Prisma.UsersUncheckedUpdateWithoutReadNotificationsInput>
 }
 
+export type UsersCreateNestedOneWithoutRefreshTokensInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutRefreshTokensInput, Prisma.UsersUncheckedCreateWithoutRefreshTokensInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutRefreshTokensInput
+  connect?: Prisma.UsersWhereUniqueInput
+}
+
+export type UsersUpdateOneRequiredWithoutRefreshTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutRefreshTokensInput, Prisma.UsersUncheckedCreateWithoutRefreshTokensInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutRefreshTokensInput
+  upsert?: Prisma.UsersUpsertWithoutRefreshTokensInput
+  connect?: Prisma.UsersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutRefreshTokensInput, Prisma.UsersUpdateWithoutRefreshTokensInput>, Prisma.UsersUncheckedUpdateWithoutRefreshTokensInput>
+}
+
 export type UsersCreateWithoutTestimoniesInput = {
   email: string
   name?: string | null
@@ -580,6 +601,7 @@ export type UsersCreateWithoutTestimoniesInput = {
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutTestimoniesInput = {
@@ -596,6 +618,7 @@ export type UsersUncheckedCreateWithoutTestimoniesInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutTestimoniesInput = {
@@ -627,6 +650,7 @@ export type UsersUpdateWithoutTestimoniesInput = {
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutTestimoniesInput = {
@@ -643,6 +667,7 @@ export type UsersUncheckedUpdateWithoutTestimoniesInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutEventsInput = {
@@ -658,6 +683,7 @@ export type UsersCreateWithoutEventsInput = {
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutEventsInput = {
@@ -674,6 +700,7 @@ export type UsersUncheckedCreateWithoutEventsInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutEventsInput = {
@@ -705,6 +732,7 @@ export type UsersUpdateWithoutEventsInput = {
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutEventsInput = {
@@ -721,6 +749,7 @@ export type UsersUncheckedUpdateWithoutEventsInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutAnnouncementsInput = {
@@ -736,6 +765,7 @@ export type UsersCreateWithoutAnnouncementsInput = {
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutAnnouncementsInput = {
@@ -752,6 +782,7 @@ export type UsersUncheckedCreateWithoutAnnouncementsInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutAnnouncementsInput = {
@@ -783,6 +814,7 @@ export type UsersUpdateWithoutAnnouncementsInput = {
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutAnnouncementsInput = {
@@ -799,6 +831,7 @@ export type UsersUncheckedUpdateWithoutAnnouncementsInput = {
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutMediasInput = {
@@ -814,6 +847,7 @@ export type UsersCreateWithoutMediasInput = {
   announcements?: Prisma.AnnouncementsCreateNestedManyWithoutUserInput
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutMediasInput = {
@@ -830,6 +864,7 @@ export type UsersUncheckedCreateWithoutMediasInput = {
   announcements?: Prisma.AnnouncementsUncheckedCreateNestedManyWithoutUserInput
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutMediasInput = {
@@ -861,6 +896,7 @@ export type UsersUpdateWithoutMediasInput = {
   announcements?: Prisma.AnnouncementsUpdateManyWithoutUserNestedInput
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutMediasInput = {
@@ -877,6 +913,7 @@ export type UsersUncheckedUpdateWithoutMediasInput = {
   announcements?: Prisma.AnnouncementsUncheckedUpdateManyWithoutUserNestedInput
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutCategoriesInput = {
@@ -892,6 +929,7 @@ export type UsersCreateWithoutCategoriesInput = {
   announcements?: Prisma.AnnouncementsCreateNestedManyWithoutUserInput
   readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutCategoriesInput = {
@@ -908,6 +946,7 @@ export type UsersUncheckedCreateWithoutCategoriesInput = {
   announcements?: Prisma.AnnouncementsUncheckedCreateNestedManyWithoutUserInput
   readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutCategoriesInput = {
@@ -939,6 +978,7 @@ export type UsersUpdateWithoutCategoriesInput = {
   announcements?: Prisma.AnnouncementsUpdateManyWithoutUserNestedInput
   readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutCategoriesInput = {
@@ -955,6 +995,7 @@ export type UsersUncheckedUpdateWithoutCategoriesInput = {
   announcements?: Prisma.AnnouncementsUncheckedUpdateManyWithoutUserNestedInput
   readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UsersCreateWithoutReadNotificationsInput = {
@@ -970,6 +1011,7 @@ export type UsersCreateWithoutReadNotificationsInput = {
   announcements?: Prisma.AnnouncementsCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
 
 export type UsersUncheckedCreateWithoutReadNotificationsInput = {
@@ -986,6 +1028,7 @@ export type UsersUncheckedCreateWithoutReadNotificationsInput = {
   announcements?: Prisma.AnnouncementsUncheckedCreateNestedManyWithoutUserInput
   medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UsersCreateOrConnectWithoutReadNotificationsInput = {
@@ -1017,6 +1060,7 @@ export type UsersUpdateWithoutReadNotificationsInput = {
   announcements?: Prisma.AnnouncementsUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutReadNotificationsInput = {
@@ -1033,6 +1077,89 @@ export type UsersUncheckedUpdateWithoutReadNotificationsInput = {
   announcements?: Prisma.AnnouncementsUncheckedUpdateManyWithoutUserNestedInput
   medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UsersCreateWithoutRefreshTokensInput = {
+  email: string
+  name?: string | null
+  password: string
+  phone?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  testimonies?: Prisma.TestimoniesCreateNestedManyWithoutUserInput
+  events?: Prisma.EventsCreateNestedManyWithoutUserInput
+  announcements?: Prisma.AnnouncementsCreateNestedManyWithoutUserInput
+  readNotifications?: Prisma.Read_NotificationsCreateNestedManyWithoutUserInput
+  medias?: Prisma.MediasCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoriesCreateNestedManyWithoutUserInput
+}
+
+export type UsersUncheckedCreateWithoutRefreshTokensInput = {
+  id?: number
+  email: string
+  name?: string | null
+  password: string
+  phone?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  testimonies?: Prisma.TestimoniesUncheckedCreateNestedManyWithoutUserInput
+  events?: Prisma.EventsUncheckedCreateNestedManyWithoutUserInput
+  announcements?: Prisma.AnnouncementsUncheckedCreateNestedManyWithoutUserInput
+  readNotifications?: Prisma.Read_NotificationsUncheckedCreateNestedManyWithoutUserInput
+  medias?: Prisma.MediasUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoriesUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UsersCreateOrConnectWithoutRefreshTokensInput = {
+  where: Prisma.UsersWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsersCreateWithoutRefreshTokensInput, Prisma.UsersUncheckedCreateWithoutRefreshTokensInput>
+}
+
+export type UsersUpsertWithoutRefreshTokensInput = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutRefreshTokensInput, Prisma.UsersUncheckedUpdateWithoutRefreshTokensInput>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutRefreshTokensInput, Prisma.UsersUncheckedCreateWithoutRefreshTokensInput>
+  where?: Prisma.UsersWhereInput
+}
+
+export type UsersUpdateToOneWithWhereWithoutRefreshTokensInput = {
+  where?: Prisma.UsersWhereInput
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutRefreshTokensInput, Prisma.UsersUncheckedUpdateWithoutRefreshTokensInput>
+}
+
+export type UsersUpdateWithoutRefreshTokensInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testimonies?: Prisma.TestimoniesUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventsUpdateManyWithoutUserNestedInput
+  announcements?: Prisma.AnnouncementsUpdateManyWithoutUserNestedInput
+  readNotifications?: Prisma.Read_NotificationsUpdateManyWithoutUserNestedInput
+  medias?: Prisma.MediasUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoriesUpdateManyWithoutUserNestedInput
+}
+
+export type UsersUncheckedUpdateWithoutRefreshTokensInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  testimonies?: Prisma.TestimoniesUncheckedUpdateManyWithoutUserNestedInput
+  events?: Prisma.EventsUncheckedUpdateManyWithoutUserNestedInput
+  announcements?: Prisma.AnnouncementsUncheckedUpdateManyWithoutUserNestedInput
+  readNotifications?: Prisma.Read_NotificationsUncheckedUpdateManyWithoutUserNestedInput
+  medias?: Prisma.MediasUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoriesUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1047,6 +1174,7 @@ export type UsersCountOutputType = {
   readNotifications: number
   medias: number
   categories: number
+  refreshTokens: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1056,6 +1184,7 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   readNotifications?: boolean | UsersCountOutputTypeCountReadNotificationsArgs
   medias?: boolean | UsersCountOutputTypeCountMediasArgs
   categories?: boolean | UsersCountOutputTypeCountCategoriesArgs
+  refreshTokens?: boolean | UsersCountOutputTypeCountRefreshTokensArgs
 }
 
 /**
@@ -1110,6 +1239,13 @@ export type UsersCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Type
   where?: Prisma.CategoriesWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountRefreshTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RefreshTokenWhereInput
+}
+
 
 export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1126,6 +1262,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   readNotifications?: boolean | Prisma.Users$readNotificationsArgs<ExtArgs>
   medias?: boolean | Prisma.Users$mediasArgs<ExtArgs>
   categories?: boolean | Prisma.Users$categoriesArgs<ExtArgs>
+  refreshTokens?: boolean | Prisma.Users$refreshTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -1170,6 +1307,7 @@ export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   readNotifications?: boolean | Prisma.Users$readNotificationsArgs<ExtArgs>
   medias?: boolean | Prisma.Users$mediasArgs<ExtArgs>
   categories?: boolean | Prisma.Users$categoriesArgs<ExtArgs>
+  refreshTokens?: boolean | Prisma.Users$refreshTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1184,6 +1322,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     readNotifications: Prisma.$Read_NotificationsPayload<ExtArgs>[]
     medias: Prisma.$MediasPayload<ExtArgs>[]
     categories: Prisma.$CategoriesPayload<ExtArgs>[]
+    refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1594,6 +1733,7 @@ export interface Prisma__UsersClient<T, Null = never, ExtArgs extends runtime.Ty
   readNotifications<T extends Prisma.Users$readNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$readNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$Read_NotificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   medias<T extends Prisma.Users$mediasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$mediasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   categories<T extends Prisma.Users$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  refreshTokens<T extends Prisma.Users$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2160,6 +2300,30 @@ export type Users$categoriesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.CategoriesScalarFieldEnum | Prisma.CategoriesScalarFieldEnum[]
+}
+
+/**
+ * Users.refreshTokens
+ */
+export type Users$refreshTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RefreshToken
+   */
+  select?: Prisma.RefreshTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RefreshToken
+   */
+  omit?: Prisma.RefreshTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RefreshTokenInclude<ExtArgs> | null
+  where?: Prisma.RefreshTokenWhereInput
+  orderBy?: Prisma.RefreshTokenOrderByWithRelationInput | Prisma.RefreshTokenOrderByWithRelationInput[]
+  cursor?: Prisma.RefreshTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RefreshTokenScalarFieldEnum | Prisma.RefreshTokenScalarFieldEnum[]
 }
 
 /**

@@ -8,11 +8,7 @@ import {
 // lister les annonces
 export async function GET() {
   try {
-    const { userId } = await requireAnyRole([
-      "SUPERADMIN",
-      "PASTOR",
-      "MODERATOR",
-    ]);
+    await requireAnyRole(["SUPERADMIN", "PASTOR", "MODERATOR"]);
     const categories = await prisma.categories.findMany();
     return NextResponse.json(
       { message: "Liste des catégories chargés.", categories },
@@ -44,6 +40,7 @@ export async function POST(req: Request) {
       "PASTOR",
       "MODERATOR",
     ]);
+    console.log("Authenticated userId:", userId);
     const body = await req.json();
 
     // Validation avec Zod
@@ -59,7 +56,7 @@ export async function POST(req: Request) {
     }
     // Vérifier que l'utilisateur existe
     const existingUser = await prisma.users.findUnique({
-      where: { id: Number(userId) },
+      where: { id: userId },
     });
     if (!existingUser) {
       return NextResponse.json(
@@ -73,7 +70,7 @@ export async function POST(req: Request) {
       data: {
         title: parseResult.data.title,
         description: parseResult.data.description,
-        userId: Number(userId),
+        userId: userId,
       },
     });
     // Enlever userId et id de la réponse
@@ -91,14 +88,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Accès interdit." }, { status: 403 });
   }
 }
+
 // mettre à jour une catégorie
 export async function PUT(req: Request) {
   try {
-    const { userId } = await requireAnyRole([
-      "SUPERADMIN",
-      "PASTOR",
-      "MODERATOR",
-    ]);
+    await requireAnyRole(["SUPERADMIN", "PASTOR", "MODERATOR"]);
 
     const body = await req.json();
 
@@ -127,7 +121,7 @@ export async function PUT(req: Request) {
 
     // inserer les données sans la base de données
     const updatedCategory = await prisma.categories.update({
-      where: { id: Number(userId) },
+      where: { id: parseResult.data.id },
       data: {
         title: parseResult.data.title ?? existingCategory.title,
         description:
@@ -152,11 +146,7 @@ export async function PUT(req: Request) {
 // supprimer une catégorie
 export async function DELETE(req: Request) {
   try {
-    const { userId } = await requireAnyRole([
-      "SUPERADMIN",
-      "PASTOR",
-      "MODERATOR",
-    ]);
+    await requireAnyRole(["SUPERADMIN", "PASTOR", "MODERATOR"]);
 
     const { id } = await req.json();
     const existingCategory = await prisma.categories.findUnique({

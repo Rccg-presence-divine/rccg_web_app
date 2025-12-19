@@ -4,7 +4,6 @@ export const createEventsSchema = z.object({
   title: z.string().min(5).max(100),
   description: z.string().min(10),
   eventDate: z.date(),
-  userId: z.int(),
 });
 
 export const updateEventsSchema = z.object({

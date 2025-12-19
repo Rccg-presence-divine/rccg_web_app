@@ -1,12 +1,20 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { createTestimoniesSchema, updateTestimoniesSchema } from "@/validators/testimonies.schema";
+import {
+  createTestimoniesSchema,
+  updateTestimoniesSchema,
+} from "@/validators/testimonies.schema";
+import { requireAnyRole, requireAuth } from "@/lib/auth";
 
 // lister les témoignages
 export async function GET() {
   try {
+    await requireAuth();
     const testimonies = await prisma.testimonies.findMany();
-    return NextResponse.json({message: "Liste des témoignages chargés.",testimonies}, { status: 200 });
+    return NextResponse.json(
+      { message: "Liste des témoignages chargés.", testimonies },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof Error) {
       console.error("GET /api/testimonies error:", error.message);
@@ -24,6 +32,9 @@ export async function GET() {
 
 // créer un témoignage
 export async function POST(req: Request) {
+  try {
+    const { userId } = await requireAuth();
+
     const body = await req.json();
 
     // Validation avec Zod
@@ -38,23 +49,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // vérifier que l'utilisateur existe
-    const user = await prisma.users.findUnique({
-      where: { id: parseResult.data.userId },
-    });
-    if (!user) {
-      return NextResponse.json(
-        { error: "Utilisateur non trouvé pour l'ID fourni." },
-        { status: 400 }
-      );
-    }
-
     // créer le témoignage
     const created = await prisma.testimonies.create({
       data: {
         title: parseResult.data.title,
         content: parseResult.data.content,
-        userId: parseResult.data.userId,
+        userId: userId,
         datePosted: new Date(),
       },
     });
@@ -86,12 +86,23 @@ export async function POST(req: Request) {
 
     // renvoyer sans id
     const { id, ...createdWithoutId } = created;
-    return NextResponse.json({message: "Témoignage créé avec succès.",createdWithoutId}, { status: 201 });
-
+    return NextResponse.json(
+      { message: "Témoignage créé avec succès.", createdWithoutId },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Utilisateur non authentifié." },
+      { status: 401 }
+    );
+  }
 }
 
 // modifier un témoignage
 export async function PUT(req: Request) {
+  try {
+    const { userId } = await requireAuth();
+
     const body = await req.json();
 
     // validation
@@ -105,7 +116,7 @@ export async function PUT(req: Request) {
         { status: 400 }
       );
     }
-
+    // vérifier que le témoignage existe
     const existing = await prisma.testimonies.findUnique({
       where: { id: parseResult.data.id },
     });
@@ -114,25 +125,40 @@ export async function PUT(req: Request) {
         { error: "Témoignage introuvable." },
         { status: 404 }
       );
+    // vérifier que l'utilisateur est le propriétaire du témoignage ou a un rôle élevé
+    if (existing.userId !== userId) {
+      return NextResponse.json(
+        { error: "Vous n'êtes pas auteur de ce témoignage pour le modifier." },
+        { status: 403 }
+      );
+    }
 
     const updated = await prisma.testimonies.update({
       where: { id: parseResult.data.id },
       data: {
         title: parseResult.data.title ?? existing.title,
         content: parseResult.data.content ?? existing.content,
-        // userId is not updatable via schema, keep existing
         datePosted: existing.datePosted,
       },
     });
 
     const { id, ...updatedWithoutId } = updated;
-    return NextResponse.json({message: "Témoignage modifié avec succès.",updatedWithoutId}, { status: 200 });
-  
+    return NextResponse.json(
+      { message: "Témoignage modifié avec succès.", updatedWithoutId },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Utilisateur non authentifié." },
+      { status: 401 }
+    );
+  }
 }
 
 // Supprimer un témoignage
 export async function DELETE(req: Request) {
   try {
+    const { userId } = await requireAuth();
     const { id } = await req.json();
     const existing = await prisma.testimonies.findUnique({
       where: { id: id },
@@ -142,6 +168,13 @@ export async function DELETE(req: Request) {
         { error: "Témoignage introuvable." },
         { status: 404 }
       );
+    // vérifier que l'utilisateur est le propriétaire du témoignage ou a un rôle élevé
+    if (existing.userId !== userId) {
+      return NextResponse.json(
+        { error: "Vous ne pouvez pas supprimer ce témoignage." },
+        { status: 403 }
+      );
+    }
     await prisma.testimonies.delete({
       where: { id: id },
     });

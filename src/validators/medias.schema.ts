@@ -9,7 +9,6 @@ export const createMediaSchema = z.object({
   isVideo: z.boolean(),
   youtubeID: z.string(),
   thumbnailUrl: z.string(),
-  userId: z.int(),
   categoryId: z.int(),
 });
 

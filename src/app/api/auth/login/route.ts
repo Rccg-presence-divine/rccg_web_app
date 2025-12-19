@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { loginSchema } from "@/validators/auth.schema";
-import { signToken } from "@/lib/jwt";
+import { signRefreshToken, signAccessToken } from "@/lib/jwt";
 import * as argon2 from "argon2";
 
 export async function POST(req: Request) {
@@ -58,15 +58,43 @@ export async function POST(req: Request) {
     );
   }
 
-  // Créer et renvoyer le token JWT
-  const token = await signToken({
+  // Créer access token
+  const accessToken = await signAccessToken({
     id: existingUser.id,
     role: existingUser.role,
   });
+  // Créer refresh token
+  const refreshToken = await signRefreshToken({
+    id: existingUser.id,
+    role: existingUser.role,
+  });
+
+  // renvoyer la réponse avec le token
+  const response = NextResponse.json({
+    accessToken,
+  });
+
+  // Enregistrer le refresh token dans les cookies
+  response.cookies.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  // Ajouter le refresh token dans la base de données
+  await prisma.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: existingUser.id,
+    },
+  });
+
   // Retirer le mot de passe avant de renvoyer l'utilisateur
   const { password, ...user } = existingUser;
   return NextResponse.json(
-    { message: `Connexion reussie`, token: `Token: ${token}`, user },
+    { message: `Connexion reussie`, token: `${accessToken}`, user },
     {
       status: 200,
       statusText: "Utilisateur connecté avec succès.",

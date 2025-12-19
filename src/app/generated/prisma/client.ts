@@ -79,3 +79,8 @@ export type Notifications = Prisma.NotificationsModel
  * 
  */
 export type Read_Notifications = Prisma.Read_NotificationsModel
+/**
+ * Model RefreshToken
+ * 
+ */
+export type RefreshToken = Prisma.RefreshTokenModel
