@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "./lib/jwt";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -33,10 +33,10 @@ export async function proxy(req: NextRequest) {
     requestHeaders.set("x-user-id", payload.id.toString());
     requestHeaders.set("x-user-role", payload.role as string);
 
-    const cookiesStore = await cookies();
-    console.log("🍪 Tous les cookies:", cookiesStore.getAll());
-    const refreshToken = cookiesStore.get("refresh_token")?.value;
-    console.log("🔑 Refresh token trouvé:", refreshToken);
+    // const cookiesStore = await cookies();
+    // console.log("🍪 Tous les cookies:", cookiesStore.getAll());
+    // const refreshToken = cookiesStore.get("refresh_token")?.value;
+    // console.log("🔑 Refresh token trouvé:", refreshToken);
     return NextResponse.next({
       request: {
         headers: requestHeaders,
