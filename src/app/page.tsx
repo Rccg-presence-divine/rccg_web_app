@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import AuthTester from "@/components/AuthTester";
 
 export default async function Home() {
   const users = await prisma.users.findMany();
@@ -14,6 +15,7 @@ export default async function Home() {
           </li>
         ))}
       </ol>
+      <AuthTester />
     </div>
   );
 }

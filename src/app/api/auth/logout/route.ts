@@ -1,50 +1,30 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
-import { verifyToken } from "@/lib/jwt";
-
-// function extractTokenFromHeader(auth: string | null) {
-//   if (!auth) return null;
-
-//   let token: string | null = null;
-//   if (auth.startsWith("Bearer ")) {
-//     const rest = auth.slice("Bearer ".length);
-//     token = rest.includes("|") ? rest.split("|")[1].trim() : rest.trim();
-//   } else if (auth.includes("|")) {
-//     token = auth.split("|")[1].trim();
-//   } else {
-//     token = auth.trim();
-//   }
-
-//   return token || null;
-// }
 
 export async function POST(req: Request) {
-  // const auth = req.headers.get("authorization");
-  // const token = extractTokenFromHeader(auth);
+  const cookieHeader = req.headers.get("cookie");
 
-  // // Stateless JWTs: nothing to revoke server-side by default.
-  // // We verify the token only to provide a helpful response for debug, but
-  // // even if verification fails we return success to keep logout idempotent.
-  // if (token) {
-  //   try {
-  //     await verifyToken(token);
-  //   } catch {
-  //     // token invalid or expired — ignore on logout
-  //   }
-  // }
-  const cookieStore = await cookies();
-  const refreshToken = cookieStore.get("refresh_token")?.value;
+  const refreshToken = cookieHeader
+    ?.split("; ")
+    .find((c) => c.startsWith("refresh_token="))
+    ?.split("=")[1];
+
   if (refreshToken) {
     await prisma.refreshToken.updateMany({
       where: { token: refreshToken },
       data: { revoked: true },
     });
   }
+  console.log(refreshToken);
 
-  const response = NextResponse.json({ message: "Déconnecté" });
+  const response = NextResponse.json({
+    message: "Vous vous êtes déconnecté",
+  });
 
   response.cookies.delete("refresh_token");
 
-  return NextResponse.json({ message: response }, { status: 200 });
+  return NextResponse.json(
+    { message: "Vous vous êtes déconnecté" },
+    { status: 200 }
+  );
 }

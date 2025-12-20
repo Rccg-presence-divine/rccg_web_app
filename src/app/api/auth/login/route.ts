@@ -69,10 +69,14 @@ export async function POST(req: Request) {
     role: existingUser.role,
   });
 
-  // renvoyer la réponse avec le token
-  const response = NextResponse.json({
-    accessToken,
-  });
+  // ✅ CRÉER LA RÉPONSE UNE SEULE FOIS
+  const response = NextResponse.json(
+    {
+      message: "Connexion réussie",
+      accessToken: accessToken,
+    },
+    { status: 200 }
+  );
 
   // Enregistrer le refresh token dans les cookies
   response.cookies.set("refresh_token", refreshToken, {
@@ -92,12 +96,5 @@ export async function POST(req: Request) {
   });
 
   // Retirer le mot de passe avant de renvoyer l'utilisateur
-  const { password, ...user } = existingUser;
-  return NextResponse.json(
-    { message: `Connexion reussie`, token: `${accessToken}`, user },
-    {
-      status: 200,
-      statusText: "Utilisateur connecté avec succès.",
-    }
-  );
+  return response;
 }
