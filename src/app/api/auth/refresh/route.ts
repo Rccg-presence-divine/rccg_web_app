@@ -1,9 +1,43 @@
 import { cookies } from "next/headers";
-import { signAccessToken, verifyRefreshToken, signRefreshToken } from "@/lib/jwt";
+import {
+  signAccessToken,
+  verifyRefreshToken,
+  signRefreshToken,
+} from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { authRateLimit } from "@/lib/rate-limit";
 
-export async function POST() {
+export async function POST(req: Request) {
+  // l'adresse IP du client
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+
+  /**
+   * Récupération des informations de rate limit
+   * success: boolean - si la requête est autorisée
+   * remaining: number - nombre de requêtes restantes
+   * reset: number - timestamp de réinitialisation
+   * */
+  const { success, remaining, reset } = await authRateLimit.limit(ip);
+
+  // Si la limite est dépassée, retourner une erreur 429
+  if (!success) {
+    return NextResponse.json(
+      {
+        error: "TOO_MANY_REQUESTS",
+        message: "Trop de tentatives, réessayez plus tard.",
+      },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+        },
+      }
+    );
+  }
+
+  // Récupérer le refresh token depuis les cookies
   const cookieStore = await cookies();
   //
   const refreshToken = cookieStore.get("refresh_token")?.value;
@@ -34,10 +68,16 @@ export async function POST() {
 
   // Générer un nouveau refresh token et access token
   const user = await prisma.users.findUnique({
-      where: { id: Number(payload.userId) },
-    });
-  const newAccessToken = await signAccessToken({ id: user!.id, role: user!.role });
-  const newRefreshToken = await signRefreshToken({ id: user!.id, role: user!.role });
+    where: { id: Number(payload.userId) },
+  });
+  const newAccessToken = await signAccessToken({
+    id: user!.id,
+    role: user!.role,
+  });
+  const newRefreshToken = await signRefreshToken({
+    id: user!.id,
+    role: user!.role,
+  });
 
   await prisma.refreshToken.create({
     data: {
@@ -58,5 +98,4 @@ export async function POST() {
 
   return NextResponse.json({ accessToken: newAccessToken });
   // Vérifier le refresh token
-
 }

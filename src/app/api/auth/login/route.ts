@@ -3,8 +3,38 @@ import { NextResponse } from "next/server";
 import { loginSchema } from "@/validators/auth.schema";
 import { signRefreshToken, signAccessToken } from "@/lib/jwt";
 import * as argon2 from "argon2";
+import { authRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
+  // l'adresse IP du client
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+
+  /** 
+   * Récupération des informations de rate limit 
+   * success: boolean - si la requête est autorisée
+   * remaining: number - nombre de requêtes restantes
+   * reset: number - timestamp de réinitialisation
+   * */
+  const { success, remaining, reset } = await authRateLimit.limit(ip);
+
+  // Si la limite est dépassée, retourner une erreur 429
+  if (!success) {
+    return NextResponse.json(
+      {
+        error: "TOO_MANY_REQUESTS",
+        message: "Trop de tentatives, réessayez plus tard.",
+      },
+      {
+        status: 429,
+        headers: {
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+        },
+      }
+    );
+  }
+
+  // Récupération des données de la requête
   const body = await req.json();
 
   // Validation avec Zod
