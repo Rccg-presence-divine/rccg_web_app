@@ -1,13 +1,22 @@
 import { PrismaClient } from '../app/generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg';
 
 const globalForPrisma = global as unknown as {
-    prisma: PrismaClient
+    prisma: PrismaClient | undefined;
 }
 
-const adapter = new PrismaPg({
+// connexion au pool de connexion
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false  // Nécessaire pour Supabase
+  }
 })
+
+// création de l'adapter avec le pool
+
+const adapter = new PrismaPg(pool)
 
 const prisma = globalForPrisma.prisma || new PrismaClient({
   adapter,
