@@ -6,36 +6,26 @@ import {
 } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { authRateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
-  // l'adresse IP du client
-  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
-
-  /**
-   * Récupération des informations de rate limit
-   * success: boolean - si la requête est autorisée
-   * remaining: number - nombre de requêtes restantes
-   * reset: number - timestamp de réinitialisation
-   * */
-  const { success, remaining, reset } = await authRateLimit.limit(ip);
-
-  // Si la limite est dépassée, retourner une erreur 429
-  if (!success) {
-    return NextResponse.json(
-      {
-        error: "TOO_MANY_REQUESTS",
-        message: "Trop de tentatives, réessayez plus tard.",
-      },
-      {
-        status: 429,
-        headers: {
-          "X-RateLimit-Remaining": remaining.toString(),
-          "X-RateLimit-Reset": reset.toString(),
-        },
-      }
-    );
-  }
+    // l'adresse IP du client
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+  
+    try {
+      await rateLimit({
+        ip,
+        route: "REFRESH",
+        limit: 5,
+        windowMs: 10 * 60 * 1000, // 10 min
+      });
+    } catch {
+      return Response.json(
+        { error: "Trop de tentatives, réessayez plus tard." },
+        { status: 429 }
+      );
+    }
+  
 
   // Récupérer le refresh token depuis les cookies
   const cookieStore = await cookies();
