@@ -84,3 +84,8 @@ export type Read_Notifications = Prisma.Read_NotificationsModel
  * 
  */
 export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model RateLimit
+ * 
+ */
+export type RateLimit = Prisma.RateLimitModel

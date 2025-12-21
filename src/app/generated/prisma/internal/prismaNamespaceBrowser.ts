@@ -59,7 +59,8 @@ export const ModelName = {
   Categories: 'Categories',
   Notifications: 'Notifications',
   Read_Notifications: 'Read_Notifications',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  RateLimit: 'RateLimit'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -195,6 +196,18 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const RateLimitScalarFieldEnum = {
+  id: 'id',
+  ip: 'ip',
+  route: 'route',
+  count: 'count',
+  resetAt: 'resetAt',
+  createdAt: 'createdAt'
+} as const
+
+export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
 
 
 export const SortOrder = {
