@@ -45,10 +45,11 @@ export default function TestAuthPage() {
         credentials: "include",
       });
 
-      const data: any = await response.json().catch(() => null);
+      const data = await response.json().catch(() => null);
+      console.log("Login response data:", data);
 
       if (response.ok) {
-        setAccessToken(typeof data?.token === "string" ? data.token : null);
+        setAccessToken(typeof data?.token === "string" ? data : null);
         setLoginResult({
           type: "success",
           message: `✅ Connexion réussie!\n\nStatus: ${
@@ -94,7 +95,7 @@ export default function TestAuthPage() {
         credentials: "include",
       });
 
-      const data: any = await response.json().catch(() => null);
+      const data = await response.json().catch(() => null);
 
       if (response.ok) {
         setAccessToken(null);
@@ -147,7 +148,7 @@ export default function TestAuthPage() {
         credentials: "include",
       });
 
-      const data: any = await response.json().catch(() => null);
+      const data = await response.json().catch(() => null);
 
       if (response.ok) {
         setProtectedResult({
@@ -198,7 +199,7 @@ export default function TestAuthPage() {
           🔐 Test Authentication API
         </h1>
         <p className="text-gray-600 mb-8 text-sm">
-          Testez vos endpoints d'authentification avec gestion des cookies
+          Testez vos endpoints l&apos;authentification avec gestion des cookies
         </p>
 
         {/* Section Login */}
@@ -252,7 +253,7 @@ export default function TestAuthPage() {
             <span>🚪</span> Logout
           </h2>
           <p className="text-gray-600 text-sm mb-4">
-            Assurez-vous d'être connecté avant de vous déconnecter
+            Assurez-vous d&apos;être connecté avant de vous déconnecter
           </p>
 
           <button
@@ -292,9 +293,9 @@ export default function TestAuthPage() {
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-800 text-sm">
           <strong>ℹ️ Info:</strong> Les cookies sont automatiquement gérés par
-          le navigateur avec l'option{" "}
+          le navigateur avec l&apos;option{" "}
           <code className="bg-yellow-100 px-2 py-1 rounded">
-            credentials: 'include'
+            credentials: &apos;include&apos;
           </code>
         </div>
       </div>
