@@ -2,25 +2,25 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { forgotPasswordSchema } from "@/validators/auth.schema";
 import * as argon2 from "argon2";
-import { rateLimit } from "@/lib/rate-limit";
+// import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
-  // l'adresse IP du client
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+  // // l'adresse IP du client
+  // const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
 
-  try {
-    await rateLimit({
-      ip,
-      route: "FORGOT_PASSWORD",
-      limit: 5,
-      windowMs: 10 * 60 * 1000, // 10 min
-    });
-  } catch {
-    return Response.json(
-      { error: "Trop de tentatives, réessayez plus tard." },
-      { status: 429 }
-    );
-  }
+  // try {
+  //   await rateLimit({
+  //     ip,
+  //     route: "FORGOT_PASSWORD",
+  //     limit: 5,
+  //     windowMs: 10 * 60 * 1000, // 10 min
+  //   });
+  // } catch {
+  //   return Response.json(
+  //     { error: "Trop de tentatives, réessayez plus tard." },
+  //     { status: 429 }
+  //   );
+  // }
 
 
   // Récupération des données de la requête
