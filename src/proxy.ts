@@ -10,6 +10,7 @@ export async function proxy(req: NextRequest) {
   if (
     pathname.startsWith("/api/auth/") ||
     pathname.startsWith("/api/test-db") ||
+    pathname.startsWith("/pages") ||
     pathname.startsWith("/_next") ||
     pathname === "/favicon.ico"
   ) {
