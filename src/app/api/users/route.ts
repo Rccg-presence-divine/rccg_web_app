@@ -82,9 +82,16 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error details:", error.message);
+    }
     return NextResponse.json(
-      { error: "Vous n'avez pas le droit necessaire." },
-      { status: 401 }
+      {
+        error: "Erreur lors de la creation de l'utilisateur.",
+        details:
+          process.env.NODE_ENV === "development" ? String(error) : undefined,
+      },
+      { status: 500 }
     );
   }
 }
@@ -153,9 +160,16 @@ export async function PUT(req: Request) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error details:", error.message);
+    }
     return NextResponse.json(
-      { error: "Utilisateur non authentifié." },
-      { status: 401 }
+      {
+        error: "Erreur lors de la modification de l'utilisateur.",
+        details:
+          process.env.NODE_ENV === "development" ? String(error) : undefined,
+      },
+      { status: 500 }
     );
   }
 }

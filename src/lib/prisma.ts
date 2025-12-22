@@ -16,8 +16,19 @@ function getDatabaseUrl(): string {
     console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('DATABASE')));
     throw new Error('DATABASE_URL environment variable is required');
   }
+  // En développement, on doit accepter les certificats auto-signés de Supabase
+  const isProduction = process.env.NODE_ENV === 'production';
   
-  return url;
+  // Modifier l'URL pour accepter les certificats en dev
+  let connectionString = url;
+  
+  if (!isProduction) {
+    // Remplacer sslmode=require par sslmode=no-verify en dev
+    connectionString = url.replace('sslmode=require', 'sslmode=no-verify');
+    // Ou complètement désactiver SSL en dev
+    // connectionString = databaseUrl.replace('sslmode=require', 'sslmode=disable');
+  }
+  return connectionString;
 }
 
 // Créer le pool de connexions

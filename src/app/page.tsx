@@ -1,21 +1,21 @@
-// import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import AuthTester from "@/components/AuthTester";
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  // const users = await prisma.users.findMany();
+  const users = await prisma.users.findMany();
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
       <h1 className="text-4xl font-bold mb-8 font-[family-name:var(--font-geist-sans)] text-[#333333]">
         Superblog
       </h1>
-      {/* <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
+      <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
         {users.map((user) => (
           <li key={user.id} className="mb-2 text-[#555555]">
             {user.name}
           </li>
         ))}
-      </ol> */}
+      </ol>
       <AuthTester />
     </div>
   );

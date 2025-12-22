@@ -9,6 +9,7 @@ export async function proxy(req: NextRequest) {
   // 1️⃣ Routes publiques (PAS de token requis)
   if (
     pathname.startsWith("/api/auth/") ||
+    pathname.startsWith("/api/test-db") ||
     pathname.startsWith("/_next") ||
     pathname === "/favicon.ico"
   ) {
