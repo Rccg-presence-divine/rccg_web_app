@@ -22,7 +22,11 @@ interface Endpoint {
     required: boolean;
     description: string;
   }[];
-  response: { status: number; description: string; example?: any }[];
+  response: {
+    status: number;
+    description: string;
+    example?: Record<string, unknown>;
+  }[];
   examples?: { curl: string; javascript: string };
 }
 
@@ -1098,7 +1102,9 @@ export default function APIDocPage() {
                                     onClick={() => {
                                       const curlExample = `curl -X ${
                                         endpoint.method
-                                      } https://rccgwebapp.vercel.app${endpoint.path} \\
+                                      } https://rccgwebapp.vercel.app${
+                                        endpoint.path
+                                      } \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_TOKEN"${
     endpoint.body && endpoint.body.length > 0
@@ -1133,7 +1139,9 @@ export default function APIDocPage() {
                                   <pre className="p-4 text-xs text-slate-100 overflow-auto max-h-40">
                                     {`curl -X ${
                                       endpoint.method
-                                    } https://rccgwebapp.vercel.app${endpoint.path} \\
+                                    } https://rccgwebapp.vercel.app${
+                                      endpoint.path
+                                    } \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_TOKEN"${
     endpoint.body && endpoint.body.length > 0
