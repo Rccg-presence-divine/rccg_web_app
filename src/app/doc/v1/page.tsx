@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, Copy, Check } from "lucide-react";
+import { API_BASE_URL } from "../../../lib/config";
 
 interface Endpoint {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -159,7 +160,7 @@ const endpoints: Endpoint[] = [
   // USERS ENDPOINTS
   {
     method: "GET",
-    path: "/api/users",
+    path: "/api/users/list",
     title: "Lister les utilisateurs",
     description: "Récupère la liste de tous les utilisateurs",
     auth: true,
@@ -171,7 +172,7 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "POST",
-    path: "/api/users",
+    path: "/api/users/new",
     title: "Créer un utilisateur",
     description: "Crée un nouvel utilisateur (admin uniquement)",
     auth: true,
@@ -215,18 +216,20 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "PUT",
-    path: "/api/users",
+    path: "/api/users/[id]/update",
     title: "Mettre à jour un utilisateur",
-    description: "Met à jour les informations d'un utilisateur",
+    description: "Met à jour les informations d'un utilisateur (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
         required: true,
         description: "ID de l'utilisateur",
       },
+    ],
+    body: [
       { name: "email", type: "string", required: false, description: "Email" },
       { name: "name", type: "string", required: false, description: "Nom" },
       {
@@ -244,12 +247,13 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/users",
+    path: "/api/users/[id]/delete",
     title: "Supprimer un utilisateur",
-    description: "Supprime un utilisateur de la base de données",
+    description:
+      "Supprime un utilisateur de la base de données (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -266,15 +270,15 @@ const endpoints: Endpoint[] = [
   // ANNOUNCEMENTS ENDPOINTS
   {
     method: "GET",
-    path: "/api/announcements",
+    path: "/api/announcements/list",
     title: "Lister les annonces",
     description: "Récupère toutes les annonces",
-    auth: true,
+    auth: false,
     response: [{ status: 200, description: "Liste des annonces" }],
   },
   {
     method: "POST",
-    path: "/api/announcements",
+    path: "/api/announcements/new",
     title: "Créer une annonce",
     description: "Crée une nouvelle annonce (admin uniquement)",
     auth: true,
@@ -300,18 +304,20 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "PUT",
-    path: "/api/announcements",
+    path: "/api/announcements/[id]/update",
     title: "Mettre à jour une annonce",
-    description: "Met à jour une annonce existante",
+    description: "Met à jour une annonce existante (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR", "MODERATOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
         required: true,
         description: "ID de l'annonce",
       },
+    ],
+    body: [
       { name: "title", type: "string", required: false, description: "Titre" },
       {
         name: "content",
@@ -327,12 +333,12 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/announcements",
+    path: "/api/announcements/[id]/delete",
     title: "Supprimer une annonce",
-    description: "Supprime une annonce",
+    description: "Supprime une annonce (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR", "MODERATOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -346,7 +352,7 @@ const endpoints: Endpoint[] = [
   // CATEGORIES ENDPOINTS
   {
     method: "GET",
-    path: "/api/categories",
+    path: "/api/categories/list",
     title: "Lister les catégories",
     description: "Récupère toutes les catégories",
     auth: true,
@@ -354,7 +360,7 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "POST",
-    path: "/api/categories",
+    path: "/api/categories/new",
     title: "Créer une catégorie",
     description: "Crée une nouvelle catégorie",
     auth: true,
@@ -377,18 +383,20 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "PUT",
-    path: "/api/categories",
+    path: "/api/categories/[id]/update",
     title: "Mettre à jour une catégorie",
-    description: "Met à jour une catégorie",
+    description: "Met à jour une catégorie (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
         required: true,
         description: "ID de la catégorie",
       },
+    ],
+    body: [
       { name: "title", type: "string", required: false, description: "Titre" },
       {
         name: "description",
@@ -401,12 +409,12 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/categories",
+    path: "/api/categories/[id]/delete",
     title: "Supprimer une catégorie",
-    description: "Supprime une catégorie",
+    description: "Supprime une catégorie (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -420,15 +428,15 @@ const endpoints: Endpoint[] = [
   // EVENTS ENDPOINTS
   {
     method: "GET",
-    path: "/api/events",
+    path: "/api/events/list",
     title: "Lister les événements",
     description: "Récupère tous les événements",
-    auth: true,
+    auth: false,
     response: [{ status: 200, description: "Liste des événements" }],
   },
   {
     method: "POST",
-    path: "/api/events",
+    path: "/api/events/new",
     title: "Créer un événement",
     description: "Crée un nouvel événement",
     auth: true,
@@ -447,6 +455,12 @@ const endpoints: Endpoint[] = [
         description: "Description (min 10)",
       },
       {
+        name: "location",
+        type: "string",
+        required: true,
+        description: "Lieu de l'événement",
+      },
+      {
         name: "eventDate",
         type: "date",
         required: true,
@@ -457,18 +471,20 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "PUT",
-    path: "/api/events",
+    path: "/api/events/[id]/update",
     title: "Mettre à jour un événement",
-    description: "Met à jour un événement",
+    description: "Met à jour un événement (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
         required: true,
         description: "ID de l'événement",
       },
+    ],
+    body: [
       { name: "title", type: "string", required: false, description: "Titre" },
       {
         name: "description",
@@ -487,12 +503,12 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/events",
+    path: "/api/events/[id]/delete",
     title: "Supprimer un événement",
-    description: "Supprime un événement",
+    description: "Supprime un événement (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -506,15 +522,15 @@ const endpoints: Endpoint[] = [
   // TESTIMONIES ENDPOINTS
   {
     method: "GET",
-    path: "/api/testimonies",
+    path: "/api/testimonies/list",
     title: "Lister les témoignages",
     description: "Récupère tous les témoignages",
-    auth: true,
+    auth: false,
     response: [{ status: 200, description: "Liste des témoignages" }],
   },
   {
     method: "POST",
-    path: "/api/testimonies",
+    path: "/api/testimonies/new",
     title: "Créer un témoignage",
     description: "Crée un nouveau témoignage",
     auth: true,
@@ -536,17 +552,19 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "PUT",
-    path: "/api/testimonies",
+    path: "/api/testimonies/[id]/update",
     title: "Mettre à jour un témoignage",
-    description: "Met à jour un témoignage",
+    description: "Met à jour un témoignage (ID dans l'URL)",
     auth: true,
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
         required: true,
         description: "ID du témoignage",
       },
+    ],
+    body: [
       { name: "title", type: "string", required: false, description: "Titre" },
       {
         name: "content",
@@ -559,11 +577,11 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/testimonies",
+    path: "/api/testimonies/[id]/delete",
     title: "Supprimer un témoignage",
-    description: "Supprime un témoignage",
+    description: "Supprime un témoignage (ID dans l'URL)",
     auth: true,
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -577,15 +595,15 @@ const endpoints: Endpoint[] = [
   // MEDIAS ENDPOINTS
   {
     method: "GET",
-    path: "/api/medias",
+    path: "/api/medias/list",
     title: "Lister les médias",
     description: "Récupère tous les fichiers médias",
-    auth: true,
+    auth: false,
     response: [{ status: 200, description: "Liste des médias" }],
   },
   {
     method: "POST",
-    path: "/api/medias",
+    path: "/api/medias/new",
     title: "Uploader un média",
     description: "Uploader un fichier média",
     auth: true,
@@ -614,12 +632,12 @@ const endpoints: Endpoint[] = [
   },
   {
     method: "DELETE",
-    path: "/api/medias",
+    path: "/api/medias/[id]/delete",
     title: "Supprimer un média",
-    description: "Supprime un fichier média",
+    description: "Supprime un fichier média (ID dans l'URL)",
     auth: true,
     roles: ["SUPERADMIN", "PASTOR", "MODERATOR"],
-    body: [
+    params: [
       {
         name: "id",
         type: "integer",
@@ -640,14 +658,33 @@ const endpoints: Endpoint[] = [
     response: [{ status: 200, description: "Liste des notifications" }],
   },
   {
-    method: "POST",
+    method: "GET",
     path: "/api/read_notification/read",
+    title: "Liste des notifications lues",
+    description: "Récupère les notifications marquées comme lues",
+    auth: true,
+    response: [{ status: 200, description: "Liste des notifications lues" }],
+  },
+  {
+    method: "GET",
+    path: "/api/read_notification/unread",
+    title: "Liste des notifications non lues",
+    description: "Récupère les notifications non lues",
+    auth: true,
+    response: [
+      { status: 200, description: "Liste des notifications non lues" },
+    ],
+  },
+  {
+    method: "PUT",
+    path: "/api/read_notification",
     title: "Marquer comme lue",
-    description: "Marque une notification comme lue",
+    description:
+      "Marque une notification comme lue (passer { id } dans le corps)",
     auth: true,
     body: [
       {
-        name: "notificationId",
+        name: "id",
         type: "integer",
         required: true,
         description: "ID de la notification",
@@ -656,22 +693,20 @@ const endpoints: Endpoint[] = [
     response: [{ status: 200, description: "Notification marquée comme lue" }],
   },
   {
-    method: "POST",
-    path: "/api/read_notification/unread",
-    title: "Marquer comme non lue",
-    description: "Marque une notification comme non lue",
+    method: "DELETE",
+    path: "/api/read_notification",
+    title: "Supprimer une notification",
+    description: "Supprime une notification (passer { id } dans le corps)",
     auth: true,
     body: [
       {
-        name: "notificationId",
+        name: "id",
         type: "integer",
         required: true,
         description: "ID de la notification",
       },
     ],
-    response: [
-      { status: 200, description: "Notification marquée comme non lue" },
-    ],
+    response: [{ status: 200, description: "Notification supprimée" }],
   },
 ];
 
@@ -707,6 +742,9 @@ export default function APIDocPage() {
     return colors[method as keyof typeof colors] || "bg-gray-100";
   };
 
+  const getFullUrl = (path: string) =>
+    `${API_BASE_URL}${path.startsWith("/api/") ? `/v1${path.slice(4)}` : path}`;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
       <div className="max-w-5xl mx-auto">
@@ -721,7 +759,9 @@ export default function APIDocPage() {
           <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <p className="text-sm text-slate-700">
               <strong>URL de base:</strong>{" "}
-              <code className="bg-white px-2 py-1 rounded">/api</code>
+              <code className="bg-white px-2 py-1 rounded">
+                {API_BASE_URL + "/api/v1"}
+              </code>
             </p>
             <p className="text-sm text-slate-700 mt-2">
               <strong>Authentification:</strong> Bearer token (JWT) requis pour
@@ -835,15 +875,15 @@ export default function APIDocPage() {
             const categoryEndpoints = endpoints.filter((ep) => {
               if (category === "Authentication")
                 return ep.path.includes("/auth/");
-              if (category === "Users") return ep.path === "/api/users";
+              if (category === "Users") return ep.path.includes("/api/users");
               if (category === "Announcements")
-                return ep.path === "/api/announcements";
+                return ep.path.includes("/api/announcements");
               if (category === "Categories")
-                return ep.path === "/api/categories";
-              if (category === "Events") return ep.path === "/api/events";
+                return ep.path.includes("/api/categories");
+              if (category === "Events") return ep.path.includes("/api/events");
               if (category === "Testimonies")
-                return ep.path === "/api/testimonies";
-              if (category === "Medias") return ep.path === "/api/medias";
+                return ep.path.includes("/api/testimonies");
+              if (category === "Medias") return ep.path.includes("/api/medias");
               if (category === "Notifications")
                 return ep.path.includes("/notification");
               return false;
@@ -1100,11 +1140,9 @@ export default function APIDocPage() {
                                 <div className="bg-slate-900 rounded relative">
                                   <button
                                     onClick={() => {
-                                      const curlExample = `curl -X ${
+                                      const curl = `curl -X ${
                                         endpoint.method
-                                      } https://rccgwebapp.vercel.app${
-                                        endpoint.path
-                                      } \\
+                                      } ${getFullUrl(endpoint.path)} \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_TOKEN"${
     endpoint.body && endpoint.body.length > 0
@@ -1117,7 +1155,7 @@ export default function APIDocPage() {
       : ""
   }`;
                                       copyToClipboard(
-                                        curlExample,
+                                        curl,
                                         `curl-${endpoint.method}-${endpoint.path}`
                                       );
                                     }}
@@ -1137,11 +1175,9 @@ export default function APIDocPage() {
                                     )}
                                   </button>
                                   <pre className="p-4 text-xs text-slate-100 overflow-auto max-h-40">
-                                    {`curl -X ${
-                                      endpoint.method
-                                    } https://rccgwebapp.vercel.app${
+                                    {`curl -X ${endpoint.method} ${getFullUrl(
                                       endpoint.path
-                                    } \\
+                                    )} \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer YOUR_TOKEN"${
     endpoint.body && endpoint.body.length > 0
@@ -1165,9 +1201,9 @@ export default function APIDocPage() {
                                 <div className="bg-slate-900 rounded relative">
                                   <button
                                     onClick={() => {
-                                      const jsExample = `const response = await fetch('https://rccgwebapp.vercel.app${
+                                      const jsExample = `const response = await fetch('${getFullUrl(
                                         endpoint.path
-                                      }', {
+                                      )}', {
   method: '${endpoint.method}',
   headers: {
     'Content-Type': 'application/json',
@@ -1204,9 +1240,9 @@ const data = await response.json();`;
                                     )}
                                   </button>
                                   <pre className="p-4 text-xs text-slate-100 overflow-auto max-h-40">
-                                    {`const response = await fetch('https://rccgwebapp.vercel.app${
+                                    {`const response = await fetch('${getFullUrl(
                                       endpoint.path
-                                    }', {
+                                    )}', {
   method: '${endpoint.method}',
   headers: {
     'Content-Type': 'application/json',

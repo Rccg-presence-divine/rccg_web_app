@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import {
-  createEventsSchema,
-} from "@/validators/events.schema";
+import { createEventsSchema } from "@/validators/events.schema";
 import { requireAnyRole } from "@/lib/auth";
 
 // créer un événement
@@ -33,8 +31,9 @@ export async function POST(req: Request) {
       data: {
         title: parseResult.data.title,
         description: parseResult.data.description,
+        eventDate: parseResult.data.eventDate,
         userId: userId,
-        eventDate: new Date(),
+        location: parseResult.data.location,
       },
     });
 

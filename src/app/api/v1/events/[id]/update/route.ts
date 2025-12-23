@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import {
-  updateEventsSchema,
-} from "@/validators/events.schema";
+import { updateEventsSchema } from "@/validators/events.schema";
 import { requireAnyRole } from "@/lib/auth";
 
 // mettre à jour un événement
@@ -40,6 +38,8 @@ export async function PUT(req: Request) {
       data: {
         title: parseResult.data.title ?? existingEvent.title,
         description: parseResult.data.description ?? existingEvent.description,
+        eventDate: parseResult.data.eventDate ?? existingEvent.eventDate,
+        location: parseResult.data.location ?? existingEvent.location,
       },
     });
 

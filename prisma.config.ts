@@ -3,11 +3,7 @@
 // npm install --save-dev prisma dotenv
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
-// // Sur Vercel, les variables d'environnement sont déjà disponibles
-// // Pas besoin de dotenv/config en production
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config();
-// }
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
@@ -16,6 +12,6 @@ export default defineConfig({
   },
   datasource: {
     url: process.env.DATABASE_URL || "", //env("DATABASE_URL"),
-    shadowDatabaseUrl: process.env.DIRECT_URL || "", //env("DIRECT_URL"),
+    // shadowDatabaseUrl: process.env.DIRECT_URL || "", //env("DIRECT_URL"),
   },
 });

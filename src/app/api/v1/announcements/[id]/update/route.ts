@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import { updateAnnouncementsSchema } from "@/validators/announcements.schema";
 import { requireAnyRole } from "@/lib/auth";
 
-
 // mettre à jour une annonce
 export async function PUT(req: Request) {
   try {

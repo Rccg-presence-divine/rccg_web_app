@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { requireAnyRole } from "@/lib/auth";
 
-// lister les annonces
+// lister les catégories
 export async function GET() {
   try {
     await requireAnyRole(["SUPERADMIN", "PASTOR", "MODERATOR"]);

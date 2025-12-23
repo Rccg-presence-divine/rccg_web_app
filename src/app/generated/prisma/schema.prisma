@@ -55,6 +55,8 @@ model Events {
   title       String
   description String
   eventDate   DateTime
+  location    String
+  image       Image?
   userId      Int
   user        Users    @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
@@ -140,4 +142,14 @@ model RateLimit {
   createdAt DateTime @default(now())
 
   @@unique([ip, route])
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String // L'URL publique de Supabase
+  path      String? // Le chemin dans le bucket (utile pour la suppression)
+  eventId   Int      @unique
+  event     Events?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

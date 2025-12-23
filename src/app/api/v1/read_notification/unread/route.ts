@@ -5,9 +5,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const readNotification = await prisma.read_Notifications.findMany({
-        where: {
-            read: false
-        },
+      where: {
+        read: false,
+      },
       include: {
         notification: {
           select: {
@@ -19,7 +19,7 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(readNotification,{ status: 200 });
+    return NextResponse.json(readNotification, { status: 200 });
   } catch (error) {
     console.error("GET /api/read_notification/read error", error);
     return NextResponse.json(

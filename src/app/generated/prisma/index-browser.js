@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.2.0
- * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
+ * Prisma Client JS version: 7.1.0
+ * Query Engine version: ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba
  */
 Prisma.prismaVersion = {
-  client: "7.2.0",
-  engine: "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3"
+  client: "7.1.0",
+  engine: "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -146,6 +146,7 @@ exports.Prisma.EventsScalarFieldEnum = {
   title: 'title',
   description: 'description',
   eventDate: 'eventDate',
+  location: 'location',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -221,6 +222,15 @@ exports.Prisma.RateLimitScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ImageScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  path: 'path',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -252,7 +262,8 @@ exports.Prisma.ModelName = {
   Notifications: 'Notifications',
   Read_Notifications: 'Read_Notifications',
   RefreshToken: 'RefreshToken',
-  RateLimit: 'RateLimit'
+  RateLimit: 'RateLimit',
+  Image: 'Image'
 };
 
 /**

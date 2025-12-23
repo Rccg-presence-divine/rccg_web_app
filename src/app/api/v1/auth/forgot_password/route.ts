@@ -22,7 +22,6 @@ export async function POST(req: Request) {
   //   );
   // }
 
-
   // Récupération des données de la requête
   const body = await req.json();
 

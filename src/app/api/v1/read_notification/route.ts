@@ -33,33 +33,33 @@ export async function GET() {
 }
 
 //mise à jour d'une notification
-export async function PUT(req: Request){
-    try {
-        const {id} = await req.json();
-        const existingNotification = await prisma.read_Notifications.findUnique({
-            where: {id: id},
-        });
-        if(!existingNotification){
-            return NextResponse.json({error: "Cette notification n'existe pas."});
-        }
-        const updatedNotification = await prisma.read_Notifications.update({
-            where: {id: id},
-            data: {
-                read: true
-            }
-        });
-        return NextResponse.json(updatedNotification, {status: 200});
-    } catch (error) {
-        console.error("PUT /api/read_notification error");
-        return NextResponse.json(
-            {
-                error: "Erreur lors de la mise à jour de la notification.",
-                details:
-                  process.env.NODE_ENV === "development" ? String(error) : undefined,
-            },
-            { status: 500 }
-          );
+export async function PUT(req: Request) {
+  try {
+    const { id } = await req.json();
+    const existingNotification = await prisma.read_Notifications.findUnique({
+      where: { id: id },
+    });
+    if (!existingNotification) {
+      return NextResponse.json({ error: "Cette notification n'existe pas." });
     }
+    const updatedNotification = await prisma.read_Notifications.update({
+      where: { id: id },
+      data: {
+        read: true,
+      },
+    });
+    return NextResponse.json(updatedNotification, { status: 200 });
+  } catch (error) {
+    console.error("PUT /api/read_notification error");
+    return NextResponse.json(
+      {
+        error: "Erreur lors de la mise à jour de la notification.",
+        details:
+          process.env.NODE_ENV === "development" ? String(error) : undefined,
+      },
+      { status: 500 }
+    );
+  }
 }
 
 // suppimer une notification
@@ -96,4 +96,3 @@ export async function DELETE(req: Request) {
     );
   }
 }
-
