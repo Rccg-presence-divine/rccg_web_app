@@ -8,8 +8,12 @@ export async function proxy(req: NextRequest) {
 
   // 1️⃣ Routes publiques (PAS de token requis)
   if (
-    pathname.startsWith("/api/auth/") ||
-    pathname.startsWith("/api/test-db") ||
+    pathname.startsWith("/api/v1/auth/") ||
+    pathname.startsWith("/api/v1/announcements/list") ||
+    pathname.startsWith("/api/v1/events/list") ||
+    pathname.startsWith("/api/v1/medias/list") ||
+    pathname.startsWith("/api/v1/testimonies/list") ||
+    pathname.startsWith("/api/v1/test-db") ||
     pathname.startsWith("/page/") ||
     pathname.startsWith("/doc") ||
     pathname.startsWith("/_next") ||

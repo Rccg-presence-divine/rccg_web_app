@@ -740,7 +740,7 @@ export default function APIDocPage() {
               <h3 className="font-semibold text-slate-800 mb-2">
                 Headers requis:
               </h3>
-              <div className="bg-slate-50 p-3 rounded font-mono text-sm">
+              <div className="bg-slate-50 p-3 rounded font-mono text-sm text-gray-500">
                 Authorization: Bearer &lt;accessToken&gt;
               </div>
             </div>
@@ -749,20 +749,20 @@ export default function APIDocPage() {
                 Rôles disponibles:
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="flex items-center">
-                  <span className="inline-block w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                <div className="flex items-center text-gray-400">
+                  <span className="inline-block w-2 h-2 bg-purple-500 rounded-full mr-2 text-gray-500"></span>
                   SUPERADMIN
                 </div>
-                <div className="flex items-center">
-                  <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                <div className="flex items-center text-gray-400">
+                  <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2 text-gray-500"></span>
                   PASTOR
                 </div>
-                <div className="flex items-center">
-                  <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+                <div className="flex items-center text-gray-400">
+                  <span className="inline-block w-2 h-2 bg-yellow-500 rounded-full mr-2 text-gray-500"></span>
                   MODERATOR
                 </div>
-                <div className="flex items-center">
-                  <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                <div className="flex items-center text-gray-400">
+                  <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 text-gray-500"></span>
                   USER
                 </div>
               </div>
