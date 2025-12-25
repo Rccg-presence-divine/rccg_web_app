@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     // s'il y a d'autres utilisateurs, créer les entrées de notification de lecture
     if (otherUsers.length > 0) {
       // créer une notification de lecture pour tous les autres utilisateurs
-      const readData = otherUsers.map((u) => ({
+      const readData = otherUsers.map((u: {id: number}) => ({
         userId: u.id,
         notificationId: createNotification.id,
         read: false,

@@ -46,7 +46,7 @@ export async function POST(req: Request) {
       select: { id: true },
     });
     if (otherUsers.length > 0) {
-      const readData = otherUsers.map((u) => ({
+      const readData = otherUsers.map((u: {id: number}) => ({
         userId: u.id,
         notificationId: createNotification.id,
         read: false,
