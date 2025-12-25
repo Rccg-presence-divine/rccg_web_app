@@ -1,11 +1,21 @@
+import  Hero  from "@/components/landing/Hero";
+import About from "@/components/landing/About";
+import Events from "@/components/landing/Events";
+import Contact from "@/components/landing/Contact";
+import Footer from "@/components/landing/Footer";
 
-
-export default async function Home() {
+export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <h1 className="text-4xl font-bold mb-8 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-        Superblog
-      </h1>
-    </div>
+    <main className="min-h-screen bg-gray-50">
+      <Hero />
+
+      <div className="max-w-7xl mx-auto px-6">
+        <About />
+        <Events />
+        <Contact />
+      </div>
+
+      <Footer />
+    </main>
   );
 }
