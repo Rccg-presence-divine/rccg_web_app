@@ -5,10 +5,16 @@ import { requireAnyRole } from "@/lib/auth";
 export async function GET() {
   try {
     await requireAnyRole(["SUPERADMIN", "PASTOR"]);
-    const users = await prisma.users.findMany();
-    const usersWithoutPasswords = users.map(({ password, ...user }) => user);
+    const users = await prisma.users.findMany({
+      select:{
+        name: true,
+        email: true,
+        role: true,
+        phone: true,
+      }
+    });
     return NextResponse.json(
-      { message: "Utilisateurs chargés.", usersWithoutPasswords },
+      { message: "Utilisateurs chargés.", users },
       { status: 200 }
     );
   } catch (error) {
