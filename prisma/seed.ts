@@ -1,10 +1,10 @@
-import { PrismaClient, Prisma } from "../src/app/generated/prisma/client";
-import { PrismaPg } from '@prisma/adapter-pg'
-import 'dotenv/config'
+import { PrismaClient } from "../src/app/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import "dotenv/config";
 
-const adapter = new PrismaPg({  
+const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
-})
+});
 
 const prisma = new PrismaClient({
   adapter,
@@ -42,8 +42,6 @@ const prisma = new PrismaClient({
 //     },
 //   },
 // ];
-
-
 
 export async function main() {
   // for (const u of userData) {

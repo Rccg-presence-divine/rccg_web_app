@@ -10,21 +10,24 @@ const globalForPrisma = global as unknown as {
 // Fonction pour obtenir DATABASE_URL
 function getDatabaseUrl(): string {
   const url = process.env.DATABASE_URL;
-  
+
   if (!url) {
-    console.error('DATABASE_URL is not defined in environment variables');
-    console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('DATABASE')));
-    throw new Error('DATABASE_URL environment variable is required');
+    console.error("DATABASE_URL is not defined in environment variables");
+    console.error(
+      "Available env vars:",
+      Object.keys(process.env).filter((key) => key.includes("DATABASE"))
+    );
+    throw new Error("DATABASE_URL environment variable is required");
   }
   // En développement, on doit accepter les certificats auto-signés de Supabase
-  const isProduction = process.env.NODE_ENV === 'production';
-  
+  const isProduction = process.env.NODE_ENV === "production";
+
   // Modifier l'URL pour accepter les certificats en dev
   let connectionString = url;
-  
+
   if (!isProduction) {
     // Remplacer sslmode=require par sslmode=no-verify en dev
-    connectionString = url.replace('sslmode=require', 'sslmode=no-verify');
+    connectionString = url.replace("sslmode=require", "sslmode=no-verify");
     // Ou complètement désactiver SSL en dev
     // connectionString = databaseUrl.replace('sslmode=require', 'sslmode=disable');
   }
@@ -35,18 +38,19 @@ function getDatabaseUrl(): string {
 const getPool = (): Pool => {
   if (!globalForPrisma.pool) {
     const databaseUrl = getDatabaseUrl();
-    
+
     globalForPrisma.pool = new Pool({
       connectionString: databaseUrl,
-      ssl: process.env.NODE_ENV === 'production' 
-        ? { rejectUnauthorized: false }
-        : false,
+      ssl:
+        process.env.NODE_ENV === "production"
+          ? { rejectUnauthorized: false }
+          : false,
       max: 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
     });
   }
-  
+
   return globalForPrisma.pool;
 };
 
@@ -54,12 +58,13 @@ const getPool = (): Pool => {
 const createPrismaClient = (): PrismaClient => {
   const pool = getPool();
   const adapter = new PrismaPg(pool);
-  
+
   return new PrismaClient({
     adapter,
-    log: process.env.NODE_ENV === 'development' 
-      ? ['query', 'error', 'warn'] 
-      : ['error'],
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["query", "error", "warn"]
+        : ["error"],
   });
 };
 
