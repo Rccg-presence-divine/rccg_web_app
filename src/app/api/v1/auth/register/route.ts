@@ -1,26 +1,14 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { registerSchema } from "@/validators/auth.schema";
+import { signAccessToken, signRefreshToken } from "@/lib/jwt";
 import * as argon2 from "argon2";
-// import { rateLimit } from "@/lib/rate-limit";
+import { headers } from "next/headers";
 
 export async function POST(req: Request) {
-  // // l'adresse IP du client
-  // const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
-
-  // try {
-  //   await rateLimit({
-  //     ip,
-  //     route: "REGISTER",
-  //     limit: 5,
-  //     windowMs: 10 * 60 * 1000, // 10 min
-  //   });
-  // } catch {
-  //   return Response.json(
-  //     { error: "Trop de tentatives, réessayez plus tard." },
-  //     { status: 429 }
-  //   );
-  // }
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent");
+  const ipAddress = headersList.get("x-forwarded-for");
 
   // Récupération des données de la requête
   const body = await req.json();
@@ -72,7 +60,41 @@ export async function POST(req: Request) {
     },
   });
 
+  // Créer access token
+  const accessToken = await signAccessToken({
+    id: createdUser.id,
+    role: createdUser.role,
+  })
+  // Créer refresh token
+  const refreshToken = await signRefreshToken({
+    id: createdUser.id,
+    role: createdUser.role,
+  });
+  // créer une session
+  await prisma.session.create({
+    data:{
+      userId: createdUser.id,
+      refreshToken,
+      userAgent,
+      ipAddress,
+    }
+  })
+  // Envoyer la reponse avec les tokens: Access er Refresh
+  const response = NextResponse.json(
+    { message: "Compte créé avec succès",
+      accessToken: accessToken, },
+    { status: 201 }
+  );
+  // Enregistrer le refresh token dans les cookies
+  response.cookies.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
   const { id, password, ...userWithoutPassword } = createdUser;
 
-  return NextResponse.json(userWithoutPassword, { status: 201 });
+  return response;
 }

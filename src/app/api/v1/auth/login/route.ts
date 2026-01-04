@@ -3,25 +3,14 @@ import { NextResponse } from "next/server";
 import { loginSchema } from "@/validators/auth.schema";
 import { signRefreshToken, signAccessToken } from "@/lib/jwt";
 import * as argon2 from "argon2";
-// import { rateLimit } from "@/lib/rate-limit";
+import { headers } from "next/headers";
+import { generateOtp, hashOtp } from "@/lib/otp";
+import { sendOtpEmail } from "@/lib/mailer";
 
 export async function POST(req: Request) {
-  // // l'adresse IP du client
-  // const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
-
-  // try {
-  //   await rateLimit({
-  //     ip,
-  //     route: "LOGIN",
-  //     limit: 5,
-  //     windowMs: 10 * 60 * 1000, // 10 min
-  //   });
-  // } catch {
-  //   return Response.json(
-  //     { error: "Trop de tentatives, réessayez plus tard." },
-  //     { status: 429 }
-  //   );
-  // }
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent");
+  const ipAddress = headersList.get("x-forwarded-for");
 
   // Récupération des données de la requête
   const body = await req.json();
@@ -76,6 +65,34 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+  // verifier si la session existe dejà
+  const existingSession = await prisma.session.findFirst({
+    where: {
+      userId: existingUser.id,
+      revoked: false,
+      userAgent: userAgent,
+    },
+  });
+  // si la session n'existe pas, on envoie l'OTP
+  if (!existingSession) {
+    const otp = generateOtp();
+    const otpHash = await hashOtp(otp);
+
+    await prisma.otpCode.create({
+      data: {
+        userId: existingUser.id,
+        codeHash: otpHash,
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+      },
+    });
+
+    await sendOtpEmail(existingUser.email, otp);
+
+    return NextResponse.json({
+      status: "OTP_REQUIRED",
+      message: "Code OTP envoyé par email",
+    });
+  }
 
   // Créer access token
   const accessToken = await signAccessToken({
@@ -86,6 +103,16 @@ export async function POST(req: Request) {
   const refreshToken = await signRefreshToken({
     id: existingUser.id,
     role: existingUser.role,
+  });
+
+  // créer une session
+  await prisma.session.create({
+    data: {
+      userId: existingUser.id,
+      refreshToken,
+      userAgent,
+      ipAddress,
+    },
   });
 
   // ✅ CRÉER LA RÉPONSE UNE SEULE FOIS

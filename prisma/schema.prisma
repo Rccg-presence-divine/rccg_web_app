@@ -36,6 +36,8 @@ model Users {
   medias            Medias[]
   categories        Categories[]
   refreshTokens     RefreshToken[]
+  sessions          Session[]
+  otpCodes          OtpCode[]
   createdAt         DateTime             @default(now())
   updatedAt         DateTime             @updatedAt
 }
@@ -152,4 +154,30 @@ model Image {
   event     Events?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  refreshToken String   @unique
+  userAgent    String?
+  ipAddress    String?
+  revoked      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  lastUsedAt   DateTime @updatedAt
+
+  user Users @relation(fields: [userId], references: [id])
+}
+
+model OtpCode {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  codeHash  String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

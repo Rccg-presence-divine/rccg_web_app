@@ -9,23 +9,6 @@ import { NextResponse } from "next/server";
 // import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
-  // // l'adresse IP du client
-  // const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
-
-  // try {
-  //   await rateLimit({
-  //     ip,
-  //     route: "REFRESH",
-  //     limit: 5,
-  //     windowMs: 10 * 60 * 1000, // 10 min
-  //   });
-  // } catch {
-  //   return Response.json(
-  //     { error: "Trop de tentatives, réessayez plus tard." },
-  //     { status: 429 }
-  //   );
-  // }
-
   // Récupérer le refresh token depuis les cookies
   const cookieStore = await cookies();
   //
@@ -37,6 +20,14 @@ export async function POST(req: Request) {
       { error: "Refresh token manquant" },
       { status: 401 }
     );
+  }
+
+  // Vérifier la session associée au refresh token
+  const session = await prisma.session.findUnique({
+    where: { refreshToken },
+  });
+  if (!session || session.revoked) {
+    return NextResponse.json({ error: "Session invalide" }, { status: 401 });
   }
 
   const storedToken = await prisma.refreshToken.findUnique({
@@ -75,6 +66,23 @@ export async function POST(req: Request) {
     },
   });
 
+  // Mise à jour de la session
+  await prisma.session.update({
+    where: { refreshToken },
+    data: {
+      revoked: true,
+    },
+  });
+  // Créer une nouvelle session
+  await prisma.session.create({
+    data: {
+      userId: Number(payload.userId),
+      refreshToken: newRefreshToken,
+      userAgent: session.userAgent,
+      ipAddress: session.ipAddress,
+    },
+  });
+
   const response = NextResponse.json({ accessToken: newAccessToken });
 
   response.cookies.set("refresh_token", newRefreshToken, {
@@ -85,6 +93,6 @@ export async function POST(req: Request) {
     maxAge: 60 * 60 * 24 * 7, // 7 jours
   });
 
-  return NextResponse.json({ accessToken: newAccessToken });
+  return response;
   // Vérifier le refresh token
 }

@@ -17,14 +17,31 @@ export async function POST(req: Request) {
   }
   console.log(refreshToken);
 
-  const response = NextResponse.json({
-    message: "Vous vous êtes déconnecté",
+  // Supprimer les sessions associées au refresh token
+  await prisma.session.updateMany({
+    where: {
+      refreshToken,
+      revoked: false,
+    },
+    data: { revoked: true },
   });
-
-  response.cookies.delete("refresh_token");
-
-  return NextResponse.json(
+  const response = NextResponse.json(
     { message: "Vous vous êtes déconnecté" },
     { status: 200 }
   );
+
+  response.cookies.delete("refresh_token");
+
+  return response;
+}
+
+
+async function logOutAllSessions(userId: number) {
+  await prisma.session.updateMany({
+  where: {
+    userId: userId,
+    revoked: false,
+  },
+  data: { revoked: true },
+});
 }
