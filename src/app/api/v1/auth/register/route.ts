@@ -64,7 +64,7 @@ export async function POST(req: Request) {
   const accessToken = await signAccessToken({
     id: createdUser.id,
     role: createdUser.role,
-  })
+  });
   // Créer refresh token
   const refreshToken = await signRefreshToken({
     id: createdUser.id,
@@ -72,17 +72,22 @@ export async function POST(req: Request) {
   });
   // créer une session
   await prisma.session.create({
-    data:{
+    data: {
       userId: createdUser.id,
       refreshToken,
       userAgent,
       ipAddress,
-    }
-  })
+    },
+  });
+  const { id, password, ...userWithoutPassword } = createdUser;
+  
   // Envoyer la reponse avec les tokens: Access er Refresh
   const response = NextResponse.json(
-    { message: "Compte créé avec succès",
-      accessToken: accessToken, },
+    {
+      message: "Compte créé avec succès",
+      accessToken: accessToken,
+      userWithoutPassword,
+    },
     { status: 201 }
   );
   // Enregistrer le refresh token dans les cookies
@@ -93,8 +98,6 @@ export async function POST(req: Request) {
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });
-
-  const { id, password, ...userWithoutPassword } = createdUser;
 
   return response;
 }
