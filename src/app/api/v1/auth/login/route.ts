@@ -28,9 +28,9 @@ export async function POST(req: Request) {
   }
 
   // Au moins email ou phone doit être fourni
-  if (!parseResult.data.email && !parseResult.data.phone) {
+  if (!parseResult.data.email) {
     return NextResponse.json(
-      { error: "Email ou téléphone requis pour la connexion." },
+      { error: "Email requis pour la connexion." },
       { status: 400 }
     );
   }
@@ -40,10 +40,6 @@ export async function POST(req: Request) {
   if (parseResult.data.email) {
     existingUser = await prisma.users.findUnique({
       where: { email: parseResult.data.email },
-    });
-  } else if (parseResult.data.phone) {
-    existingUser = await prisma.users.findFirst({
-      where: { phone: parseResult.data.phone },
     });
   }
 
@@ -120,6 +116,13 @@ export async function POST(req: Request) {
     {
       message: "Connexion réussie",
       accessToken: accessToken,
+      user: {
+        id: existingUser.id,
+        email: existingUser.email,
+        role: existingUser.role,
+        name: existingUser.name,
+        phone: existingUser.phone,
+      },
     },
     { status: 200 }
   );

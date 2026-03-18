@@ -46,12 +46,15 @@ export async function PUT(req: Request) {
       },
     });
 
-    const { id, ...updatedWithoutId } = updated;
+    // const { id, ...updatedWithoutId } = updated;
     return NextResponse.json(
-      { message: "Témoignage modifié avec succès.", updatedWithoutId },
+      { message: "Témoignage modifié avec succès.", updated },
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("PUT /api/v1/testimonies/update error:", error.message);
+    }
     return NextResponse.json(
       { error: "Utilisateur non authentifié." },
       { status: 401 }

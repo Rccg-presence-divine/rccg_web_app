@@ -42,14 +42,17 @@ export async function PUT(req: Request) {
     });
 
     // retirer l'id avant de renvoyer la réponse
-    const { id, ...announcementWithoutId } = announcement;
+    // const { id, ...announcementWithoutId } = announcement;
 
     // renvoyer la réponse
     return NextResponse.json(
-      { message: "Annonce mise à jour.", announcementWithoutId },
+      { message: "Annonce mise à jour.", announcement },
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("PUT /api/v1/announcements/update error:", error.message);
+    }
     return NextResponse.json(
       { error: "Utilisateur non authentifié." },
       { status: 401 }

@@ -44,11 +44,11 @@ export async function POST(req: Request) {
       },
     });
     // Enlever userId et id de la réponse
-    const { id, ...categoryWithoutId } = newCategory;
+    // const { id, ...categoryWithoutId } = newCategory;
 
     // Renvoyer la réponse
     return NextResponse.json(
-      { message: "Catégorie crée.", categoryWithoutId },
+      { message: "Catégorie crée.", newCategory },
       { status: 201 }
     );
   } catch (error) {

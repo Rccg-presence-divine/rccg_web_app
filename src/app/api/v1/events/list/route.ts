@@ -10,8 +10,9 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
+
     if (error instanceof Error) {
-      console.error("Error details:", error.message);
+      console.error("GET /api/v1/events/list error:", error.message);
     }
     return NextResponse.json(
       {

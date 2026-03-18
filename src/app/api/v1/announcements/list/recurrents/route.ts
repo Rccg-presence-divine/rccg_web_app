@@ -1,20 +1,23 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-// lister les témoignages
+
 export async function GET() {
   try {
-    const testimonies = await prisma.testimonies.findMany();
+    const announcements = await prisma.announcements.findMany({
+      where: { recurrent: true },
+      orderBy: { datePosted: "desc" },
+    });
     return NextResponse.json(
-      { message: "Liste des témoignages chargés.", testimonies },
+      { message: "List des annonces chargés.", announcements },
       { status: 200 }
     );
   } catch (error) {
     if (error instanceof Error) {
-      console.error("GET /api/v1/testimonies/list error:", error.message);
+      console.error("GET /api/v1/announcements/list/recurrents error:", error.message);
     }
     return NextResponse.json(
       {
-        error: "Erreur lors de la récupération des témoignages.",
+        error: "Erreur lors de la récupération des annonces.",
         details:
           process.env.NODE_ENV === "development" ? String(error) : undefined,
       },

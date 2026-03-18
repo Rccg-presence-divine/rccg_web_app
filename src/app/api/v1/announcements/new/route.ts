@@ -64,13 +64,16 @@ export async function POST(req: Request) {
     }
 
     // afficher l'annonce créer sans id
-    const { id, ...announcementWithoutId } = announcement;
+    // const { id, ...announcementWithoutId } = announcement;
     // renvoyer la réponse
     return NextResponse.json(
-      { message: "Annonce crée.", announcementWithoutId },
+      { message: "Annonce crée.", announcement },
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("POST /api/v1/events/new error:", error.message);
+    }
     return NextResponse.json(
       { error: "Utilisateur non authentifié." },
       { status: 401 }

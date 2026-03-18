@@ -4,14 +4,16 @@ import prisma from "@/lib/prisma";
 // lister les annonces
 export async function GET() {
   try {
-    const announcements = await prisma.announcements.findMany();
+    const announcements = await prisma.announcements.findMany({
+      orderBy: { datePosted: "desc" },
+    });
     return NextResponse.json(
       { message: "List des annonces chargés.", announcements },
       { status: 200 }
     );
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error details:", error.message);
+      console.error("GET /api/v1/announcements/list error:", error.message);
     }
     return NextResponse.json(
       {

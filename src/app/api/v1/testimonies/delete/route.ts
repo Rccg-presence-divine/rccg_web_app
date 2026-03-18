@@ -26,7 +26,9 @@ export async function DELETE(req: Request) {
     });
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.error("DELETE /api/v1/testimonies error", error);
+    if (error instanceof Error) {
+      console.error("DELETE /api/v1/testimonies/delete error:", error.message);
+    }
     return NextResponse.json(
       { error: "Erreur lors de la suppression." },
       { status: 500 }

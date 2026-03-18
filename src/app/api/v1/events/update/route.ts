@@ -44,14 +44,17 @@ export async function PUT(req: Request) {
     });
 
     // retirer l'id avant de renvoyer la réponse
-    const { id, ...eventtWithoutId } = event;
+    // const { id, ...eventtWithoutId } = event;
 
     // renvoyer la réponse
     return NextResponse.json(
-      { message: "Evénement mis à jour.", eventtWithoutId },
+      { message: "Evénement mis à jour.", event },
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("PUT /api/v1/events/update error:", error.message);
+    }
     return NextResponse.json(
       { error: "Utilisateur non authentifié." },
       { status: 401 }

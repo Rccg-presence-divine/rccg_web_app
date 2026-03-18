@@ -79,14 +79,20 @@ export async function POST(req: Request) {
       ipAddress,
     },
   });
-  const { id, password, ...userWithoutPassword } = createdUser;
+  // const { id, password, ...userWithoutPassword } = createdUser;
   
   // Envoyer la reponse avec les tokens: Access er Refresh
   const response = NextResponse.json(
     {
       message: "Compte créé avec succès",
       accessToken: accessToken,
-      userWithoutPassword,
+      user: {
+        id: createdUser.id,
+        email: createdUser.email,
+        role: createdUser.role,
+        name: createdUser.name,
+        phone: createdUser.phone,
+      },
     },
     { status: 201 }
   );

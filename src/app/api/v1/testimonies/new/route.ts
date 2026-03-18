@@ -58,12 +58,15 @@ export async function POST(req: Request) {
     }
 
     // renvoyer sans id
-    const { id, ...createdWithoutId } = created;
+    // const { id, ...createdWithoutId } = created;
     return NextResponse.json(
-      { message: "Témoignage créé avec succès.", createdWithoutId },
+      { message: "Témoignage créé avec succès.", created },
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof Error) {
+      console.error("POST /api/v1/testimonies/new error:", error.message);
+    }
     return NextResponse.json(
       { error: "Utilisateur non authentifié." },
       { status: 401 }

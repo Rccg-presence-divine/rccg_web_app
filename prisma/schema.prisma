@@ -38,6 +38,7 @@ model Users {
   refreshTokens     RefreshToken[]
   sessions          Session[]
   otpCodes          OtpCode[]
+  avatar            Image?
   createdAt         DateTime             @default(now())
   updatedAt         DateTime             @updatedAt
 }
@@ -48,6 +49,7 @@ model Testimonies {
   content    String
   datePosted DateTime @default(now())
   userId     Int
+  approved   Boolean  @default(false)
   user       Users    @relation(fields: [userId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -71,7 +73,9 @@ model Announcements {
   title      String
   content    String
   datePosted DateTime @default(now())
+  image      Image?
   userId     Int
+  recurrent  Boolean @default(false)
   user       Users    @relation(fields: [userId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -87,6 +91,7 @@ model Medias {
   isVideo      Boolean    @default(true)
   youtubeID    String?
   thumbnailUrl String?
+  featured     Boolean    @default(false)
   userId       Int
   user         Users      @relation(fields: [userId], references: [id])
   categoryId   Int
@@ -152,6 +157,10 @@ model Image {
   path      String? // Le chemin dans le bucket (utile pour la suppression)
   eventId   Int  @unique
   event     Events?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  announceId Int @unique
+  announce  Announcements? @relation(fields: [announceId], references: [id], onDelete: Cascade)
+  userId    Int @unique
+  user      Users? @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
